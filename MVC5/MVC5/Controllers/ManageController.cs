@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
+using MVC5.Features.Identity;
+using MVC5.ViewModels.Manage;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using MVC5.Models;
 
 namespace MVC5.Controllers
 {
@@ -333,7 +333,7 @@ namespace MVC5.Controllers
             base.Dispose(disposing);
         }
 
-#region Helpers
+        #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
@@ -384,6 +384,6 @@ namespace MVC5.Controllers
             Error
         }
 
-#endregion
+        #endregion
     }
 }

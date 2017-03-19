@@ -6,6 +6,8 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using MVC5.Models;
+using MVC5.Data;
+using MVC5.Features.Identity;
 
 namespace MVC5
 {
