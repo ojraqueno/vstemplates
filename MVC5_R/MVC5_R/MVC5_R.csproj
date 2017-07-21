@@ -191,23 +191,23 @@
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="ViewModels\Account\ExternalLoginConfirmationViewModel.cs" />
-    <Compile Include="ViewModels\Account\ExternalLoginListViewModel.cs" />
-    <Compile Include="ViewModels\Account\ForgotPasswordViewModel.cs" />
-    <Compile Include="ViewModels\Account\ForgotViewModel.cs" />
-    <Compile Include="ViewModels\Account\LoginViewModel.cs" />
-    <Compile Include="ViewModels\Account\RegisterViewModel.cs" />
-    <Compile Include="ViewModels\Account\ResetPasswordViewModel.cs" />
-    <Compile Include="ViewModels\Account\SendCodeViewModel.cs" />
-    <Compile Include="ViewModels\Account\VerifyCodeViewModel.cs" />
-    <Compile Include="ViewModels\Manage\AddPhoneNumberViewModel.cs" />
-    <Compile Include="ViewModels\Manage\ChangePasswordViewModel.cs" />
-    <Compile Include="ViewModels\Manage\ConfigureTwoFactorViewModel.cs" />
-    <Compile Include="ViewModels\Manage\FactorViewModel.cs" />
-    <Compile Include="ViewModels\Manage\IndexViewModel.cs" />
-    <Compile Include="ViewModels\Manage\ManageLoginsViewModel.cs" />
-    <Compile Include="ViewModels\Manage\SetPasswordViewModel.cs" />
-    <Compile Include="ViewModels\Manage\VerifyPhoneNumberViewModel.cs" />
+    <Compile Include="Features\Account\ExternalLoginConfirmationViewModel.cs" />
+    <Compile Include="Features\Account\ExternalLoginListViewModel.cs" />
+    <Compile Include="Features\Account\ForgotPasswordViewModel.cs" />
+    <Compile Include="Features\Account\ForgotViewModel.cs" />
+    <Compile Include="Features\Account\LoginViewModel.cs" />
+    <Compile Include="Features\Account\RegisterViewModel.cs" />
+    <Compile Include="Features\Account\ResetPasswordViewModel.cs" />
+    <Compile Include="Features\Account\SendCodeViewModel.cs" />
+    <Compile Include="Features\Account\VerifyCodeViewModel.cs" />
+    <Compile Include="Features\Manage\AddPhoneNumberViewModel.cs" />
+    <Compile Include="Features\Manage\ChangePasswordViewModel.cs" />
+    <Compile Include="Features\Manage\ConfigureTwoFactorViewModel.cs" />
+    <Compile Include="Features\Manage\FactorViewModel.cs" />
+    <Compile Include="Features\Manage\IndexViewModel.cs" />
+    <Compile Include="Features\Manage\ManageLoginsViewModel.cs" />
+    <Compile Include="Features\Manage\SetPasswordViewModel.cs" />
+    <Compile Include="Features\Manage\VerifyPhoneNumberViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="bower_components\bootstrap\dist\css\bootstrap-theme.css" />
@@ -511,7 +511,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Extensions\" />
+    <Folder Include="ViewModels\Account\" />
+    <Folder Include="ViewModels\Manage\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

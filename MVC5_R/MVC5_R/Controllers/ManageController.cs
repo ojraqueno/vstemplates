@@ -2,7 +2,7 @@
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using MVC5_R.Features.Identity;
-using MVC5_R.ViewModels.Manage;
+using MVC5_R.Features.Manage;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;

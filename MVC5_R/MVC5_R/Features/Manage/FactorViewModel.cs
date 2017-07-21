@@ -1,4 +1,4 @@
-﻿namespace MVC5_R.ViewModels.Manage
+﻿namespace MVC5_R.Features.Manage
 {
     public class FactorViewModel
     {

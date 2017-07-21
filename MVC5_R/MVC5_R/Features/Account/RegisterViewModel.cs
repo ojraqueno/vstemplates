@@ -1,11 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MVC5_R.ViewModels.Account
+namespace MVC5_R.Features.Account
 {
-    public class ResetPasswordViewModel
+    public class RegisterViewModel
     {
-        public string Code { get; set; }
-
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]

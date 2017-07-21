@@ -2,7 +2,7 @@
 using Microsoft.Owin.Security;
 using System.Collections.Generic;
 
-namespace MVC5_R.ViewModels.Manage
+namespace MVC5_R.Features.Manage
 {
     public class ManageLoginsViewModel
     {

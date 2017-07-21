@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MVC5_R.ViewModels.Account
+namespace MVC5_R.Features.Account
 {
     public class ExternalLoginConfirmationViewModel
     {

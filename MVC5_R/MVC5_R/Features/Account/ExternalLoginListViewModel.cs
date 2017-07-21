@@ -1,4 +1,4 @@
-﻿namespace MVC5_R.ViewModels.Account
+﻿namespace MVC5_R.Features.Account
 {
     public class ExternalLoginListViewModel
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
 
-namespace MVC5_R.ViewModels.Manage
+namespace MVC5_R.Features.Manage
 {
     public class ConfigureTwoFactorViewModel
     {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MVC5_R.ViewModels.Manage
+namespace MVC5_R.Features.Manage
 {
     public class VerifyPhoneNumberViewModel
     {

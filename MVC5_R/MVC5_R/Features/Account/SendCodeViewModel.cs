@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
 
-namespace MVC5_R.ViewModels.Account
+namespace MVC5_R.Features.Account
 {
     public class SendCodeViewModel
     {
