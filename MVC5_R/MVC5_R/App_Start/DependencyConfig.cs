@@ -1,4 +1,5 @@
 ﻿using MVC5_R.Data;
+using MVC5_R.Infrastructure.Logging;
 using SimpleInjector;
 using SimpleInjector.Integration.Web;
 using SimpleInjector.Integration.Web.Mvc;
@@ -19,6 +20,7 @@ namespace MVC5_R
             Container.Options.DefaultScopedLifestyle = new WebRequestLifestyle();
 
             Container.Register<ApplicationDbContext, ApplicationDbContext>(Lifestyle.Scoped);
+            Container.Register<IMVCLogger, MVCLogger>(Lifestyle.Singleton);
         }
     }
 }

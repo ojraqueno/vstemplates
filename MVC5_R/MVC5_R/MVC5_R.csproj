@@ -179,17 +179,26 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Data\ApplicationDbContext.cs" />
+    <Compile Include="Data\Migrations\201707211355485_Initial.cs" />
+    <Compile Include="Data\Migrations\201707211355485_Initial.Designer.cs">
+      <DependentUpon>201707211355485_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Migrations\Configuration.cs" />
     <Compile Include="Infrastructure\Configuration\AppSettings.cs" />
     <Compile Include="Infrastructure\Bundling\BundleCollectionExtensions.cs" />
     <Compile Include="Infrastructure\Email\EmailService.cs" />
     <Compile Include="Infrastructure\Identity\ApplicationSignInManager.cs" />
     <Compile Include="Infrastructure\Identity\ApplicationUserManager.cs" />
+    <Compile Include="Infrastructure\Logging\ExceptionLoggerAttribute.cs" />
+    <Compile Include="Infrastructure\Logging\IMVCLogger.cs" />
+    <Compile Include="Infrastructure\Logging\MVCLogger.cs" />
     <Compile Include="Infrastructure\Sms\SmsService.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\Bundling\NonOrderingBundleOrderer.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
+    <Compile Include="Models\LogEntry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Features\Account\ExternalLoginConfirmationViewModel.cs" />
@@ -636,6 +645,11 @@
     <Content Include="bower_components\jquery\README.md" />
     <Content Include="bower_components\jquery\src\.eslintrc.json" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Data\Migrations\201707211355485_Initial.resx">
+      <DependentUpon>201707211355485_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
