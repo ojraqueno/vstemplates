@@ -181,10 +181,10 @@
     <Compile Include="Data\ApplicationDbContext.cs" />
     <Compile Include="Infrastructure\Configuration\AppSettings.cs" />
     <Compile Include="Infrastructure\Bundling\BundleCollectionExtensions.cs" />
-    <Compile Include="Features\Email\EmailService.cs" />
-    <Compile Include="Features\Identity\ApplicationSignInManager.cs" />
-    <Compile Include="Features\Identity\ApplicationUserManager.cs" />
-    <Compile Include="Features\Sms\SmsService.cs" />
+    <Compile Include="Infrastructure\Email\EmailService.cs" />
+    <Compile Include="Infrastructure\Identity\ApplicationSignInManager.cs" />
+    <Compile Include="Infrastructure\Identity\ApplicationUserManager.cs" />
+    <Compile Include="Infrastructure\Sms\SmsService.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using System.Threading.Tasks;
 
-namespace MVC5_R.Features.Email
+namespace MVC5_R.Infrastructure.Email
 {
     public class EmailService : IIdentityMessageService
     {

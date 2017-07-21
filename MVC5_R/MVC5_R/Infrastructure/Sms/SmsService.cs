@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using System.Threading.Tasks;
 
-namespace MVC5_R.Features.Sms
+namespace MVC5_R.Infrastructure.Sms
 {
     public class SmsService : IIdentityMessageService
     {
