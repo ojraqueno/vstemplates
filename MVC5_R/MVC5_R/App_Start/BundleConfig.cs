@@ -1,31 +1,25 @@
-﻿using System.Web;
+﻿using MVC5_R.Infrastructure.Bundling;
 using System.Web.Optimization;
 
 namespace MVC5_R
 {
     public class BundleConfig
     {
-        // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+            AddCoreBundles(bundles);
+        }
 
-            bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/jquery.validate*"));
+        private static void AddCoreBundles(BundleCollection bundles)
+        {
+            bundles.AddStyleBundle("~/stylebundles/core",
+                "~/bower_components/bootstrap/dist/css/bootstrap.css",
+                "~/Content/site.css");
 
-            // Use the development version of Modernizr to develop with and learn from. Then, when you're
-            // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
-            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                        "~/Scripts/modernizr-*"));
-
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
-
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+            bundles.AddScriptBundle("~/scriptbundles/core",
+                "~/bower_components/jquery/dist/jquery.min.js",
+                "~/bower_components/jquery-validation/dist/jquery.validate.min.js",
+                "~/bower_components/bootstrap/dist/js/bootstrap.js");
         }
     }
 }
