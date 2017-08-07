@@ -19,6 +19,7 @@ namespace MVC5_R
             bundles.AddScriptBundle("~/scriptbundles/core",
                 "~/bower_components/jquery/dist/jquery.min.js",
                 "~/bower_components/jquery-validation/dist/jquery.validate.min.js",
+                "~/bower_components/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js",
                 "~/bower_components/bootstrap/dist/js/bootstrap.js");
         }
     }
