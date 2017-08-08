@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace MVC5_R.Infrastructure.Sms
 {
-    public class SmsService : IIdentityMessageService
+    public class NoopSmsService : IIdentityMessageService
     {
         public Task SendAsync(IdentityMessage message)
         {

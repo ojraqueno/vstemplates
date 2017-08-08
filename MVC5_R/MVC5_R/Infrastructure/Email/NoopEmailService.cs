@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace MVC5_R.Infrastructure.Email
 {
-    public class EmailService : IIdentityMessageService
+    public class NoopEmailService : IIdentityMessageService
     {
         public Task SendAsync(IdentityMessage message)
         {

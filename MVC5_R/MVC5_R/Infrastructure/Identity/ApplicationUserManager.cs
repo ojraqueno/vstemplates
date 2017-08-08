@@ -56,8 +56,8 @@ namespace MVC5_R.Infrastructure.Identity
                 BodyFormat = "Your security code is {0}"
             });
 
-            manager.EmailService = new EmailService();
-            manager.SmsService = new SmsService();
+            manager.EmailService = new NoopEmailService();
+            manager.SmsService = new NoopSmsService();
 
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null)
