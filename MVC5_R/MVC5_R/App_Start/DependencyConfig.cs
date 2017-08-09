@@ -1,8 +1,10 @@
-﻿using MVC5_R.Data;
+﻿using FluentValidation;
+using MVC5_R.Data;
 using MVC5_R.Infrastructure.Logging;
 using SimpleInjector;
 using SimpleInjector.Integration.Web;
 using SimpleInjector.Integration.Web.Mvc;
+using System.Reflection;
 using System.Web.Mvc;
 
 namespace MVC5_R
@@ -18,6 +20,9 @@ namespace MVC5_R
             DependencyResolver.SetResolver(new SimpleInjectorDependencyResolver(Container));
 
             Container.Options.DefaultScopedLifestyle = new WebRequestLifestyle();
+
+            var assemblyOfValidationClasses = Assembly.GetExecutingAssembly();
+            Container.Register(typeof(IValidator<>), new[] { assemblyOfValidationClasses });
 
             Container.Register<ApplicationDbContext, ApplicationDbContext>(Lifestyle.Scoped);
             Container.Register<IMVCLogger, MVCLogger>(Lifestyle.Singleton);
