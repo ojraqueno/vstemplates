@@ -9,7 +9,6 @@ namespace MVC5_R
     {
         protected void Application_Start()
         {
-            DependencyConfig.Configure();
             ValidationConfig.Configure();
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

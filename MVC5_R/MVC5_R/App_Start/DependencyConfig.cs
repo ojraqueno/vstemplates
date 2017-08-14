@@ -8,29 +8,41 @@ using MVC5_R.Infrastructure.Logging;
 using SimpleInjector;
 using SimpleInjector.Integration.Web;
 using SimpleInjector.Integration.Web.Mvc;
+using System;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 
 namespace MVC5_R
 {
-    public class DependencyConfig
+    public class DependencyConfig : IServiceProvider
     {
-        public static Container Container { get; private set; }
+        private static readonly Lazy<DependencyConfig> lazy = new Lazy<DependencyConfig>(() => new DependencyConfig());
 
-        public static void Configure()
+        public static DependencyConfig Instance { get { return lazy.Value; } }
+
+        public Container Container { get; private set; }
+
+        private DependencyConfig()
         {
-            Container = new Container();
-            Container.Options.DefaultScopedLifestyle = new WebRequestLifestyle();
+            Container = ConfigureContainer();
+        }
 
-            Container.Register<ApplicationDbContext, ApplicationDbContext>(Lifestyle.Scoped);
-            RegisterValidators();
-            RegisterMediatR();
-            Container.Register<ApplicationSignInManager>(GetApplicationSignInManager, Lifestyle.Scoped);
-            Container.Register<ApplicationUserManager>(GetApplicationUserManager, Lifestyle.Scoped);
-            Container.Register<IMVCLogger, MVCLogger>(Lifestyle.Singleton);
+        public Container ConfigureContainer()
+        {
+            var container = new Container();
+            container.Options.DefaultScopedLifestyle = new WebRequestLifestyle();
 
-            DependencyResolver.SetResolver(new SimpleInjectorDependencyResolver(Container));
+            container.Register<ApplicationDbContext, ApplicationDbContext>(Lifestyle.Scoped);
+            RegisterValidators(container);
+            RegisterMediatR(container);
+            container.Register<ApplicationSignInManager>(GetApplicationSignInManager, Lifestyle.Scoped);
+            container.Register<ApplicationUserManager>(GetApplicationUserManager, Lifestyle.Scoped);
+            container.Register<IMVCLogger, MVCLogger>(Lifestyle.Singleton);
+
+            DependencyResolver.SetResolver(new SimpleInjectorDependencyResolver(container));
+
+            return container;
         }
 
         private static ApplicationSignInManager GetApplicationSignInManager()
@@ -44,35 +56,40 @@ namespace MVC5_R
         }
 
         // More info: https://github.com/jbogard/MediatR/blob/master/samples/MediatR.Examples.SimpleInjector/Program.cs
-        private static void RegisterMediatR()
+        private static void RegisterMediatR(Container container)
         {
             var assemblyOfMediatRClasses = Assembly.GetExecutingAssembly();
             var assemblies = new[] { assemblyOfMediatRClasses };
-            Container.RegisterSingleton<IMediator, Mediator>();
-            Container.Register(typeof(IRequestHandler<,>), assemblies);
-            Container.Register(typeof(IAsyncRequestHandler<,>), assemblies);
-            Container.Register(typeof(IRequestHandler<>), assemblies);
-            Container.Register(typeof(IAsyncRequestHandler<>), assemblies);
-            Container.Register(typeof(ICancellableAsyncRequestHandler<>), assemblies);
-            Container.RegisterCollection(typeof(INotificationHandler<>), assemblies);
-            Container.RegisterCollection(typeof(IAsyncNotificationHandler<>), assemblies);
-            Container.RegisterCollection(typeof(ICancellableAsyncNotificationHandler<>), assemblies);
+            container.RegisterSingleton<IMediator, Mediator>();
+            container.Register(typeof(IRequestHandler<,>), assemblies);
+            container.Register(typeof(IAsyncRequestHandler<,>), assemblies);
+            container.Register(typeof(IRequestHandler<>), assemblies);
+            container.Register(typeof(IAsyncRequestHandler<>), assemblies);
+            container.Register(typeof(ICancellableAsyncRequestHandler<>), assemblies);
+            container.RegisterCollection(typeof(INotificationHandler<>), assemblies);
+            container.RegisterCollection(typeof(IAsyncNotificationHandler<>), assemblies);
+            container.RegisterCollection(typeof(ICancellableAsyncNotificationHandler<>), assemblies);
 
             //Pipeline
-            Container.RegisterCollection(typeof(IPipelineBehavior<,>), new[]
+            container.RegisterCollection(typeof(IPipelineBehavior<,>), new[]
             {
                 typeof(RequestPreProcessorBehavior<,>),
                 typeof(RequestPostProcessorBehavior<,>)
             });
 
-            Container.RegisterSingleton(new SingleInstanceFactory(Container.GetInstance));
-            Container.RegisterSingleton(new MultiInstanceFactory(Container.GetAllInstances));
+            container.RegisterSingleton(new SingleInstanceFactory(container.GetInstance));
+            container.RegisterSingleton(new MultiInstanceFactory(container.GetAllInstances));
         }
 
-        private static void RegisterValidators()
+        private static void RegisterValidators(Container container)
         {
             var assemblyOfValidationClasses = Assembly.GetExecutingAssembly();
-            Container.Register(typeof(IValidator<>), new[] { Assembly.GetExecutingAssembly() });
+            container.Register(typeof(IValidator<>), new[] { Assembly.GetExecutingAssembly() });
+        }
+
+        public object GetService(Type serviceType)
+        {
+            return ((IServiceProvider)Container).GetService(serviceType);
         }
     }
 }

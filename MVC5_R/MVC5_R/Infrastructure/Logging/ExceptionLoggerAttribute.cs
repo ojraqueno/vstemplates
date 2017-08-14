@@ -6,7 +6,7 @@ namespace MVC5_R.Infrastructure.Logging
     {
         public void OnException(ExceptionContext filterContext)
         {
-            var logger = DependencyConfig.Container.GetInstance<IMVCLogger>();
+            var logger = DependencyConfig.Instance.Container.GetInstance<IMVCLogger>();
             logger.Log(filterContext);
         }
     }
