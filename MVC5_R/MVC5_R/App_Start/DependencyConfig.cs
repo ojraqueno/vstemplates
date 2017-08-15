@@ -9,7 +9,9 @@ using SimpleInjector;
 using SimpleInjector.Integration.Web;
 using SimpleInjector.Integration.Web.Mvc;
 using System;
+using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -69,13 +71,18 @@ namespace MVC5_R
             container.RegisterCollection(typeof(INotificationHandler<>), assemblies);
             container.RegisterCollection(typeof(IAsyncNotificationHandler<>), assemblies);
             container.RegisterCollection(typeof(ICancellableAsyncNotificationHandler<>), assemblies);
+            container.RegisterSingleton(Console.Out);
 
             //Pipeline
             container.RegisterCollection(typeof(IPipelineBehavior<,>), new[]
             {
                 typeof(RequestPreProcessorBehavior<,>),
-                typeof(RequestPostProcessorBehavior<,>)
+                typeof(RequestPostProcessorBehavior<,>),
+                typeof(GenericPipelineBehavior<,>)
             });
+
+            container.RegisterCollection(typeof(IRequestPreProcessor<>), new[] { typeof(GenericRequestPreProcessor<>) });
+            container.RegisterCollection(typeof(IRequestPostProcessor<,>), new[] { typeof(GenericRequestPostProcessor<,>) });
 
             container.RegisterSingleton(new SingleInstanceFactory(container.GetInstance));
             container.RegisterSingleton(new MultiInstanceFactory(container.GetAllInstances));
@@ -90,6 +97,59 @@ namespace MVC5_R
         public object GetService(Type serviceType)
         {
             return ((IServiceProvider)Container).GetService(serviceType);
+        }
+    }
+
+    // https://github.com/jbogard/MediatR/blob/master/samples/MediatR.Examples/GenericRequestPreProcessor.cs
+    public class GenericRequestPreProcessor<TRequest> : IRequestPreProcessor<TRequest>
+    {
+        private readonly TextWriter _writer;
+
+        public GenericRequestPreProcessor(TextWriter writer)
+        {
+            _writer = writer;
+        }
+
+        public Task Process(TRequest request)
+        {
+            _writer.WriteLine("- Starting Up");
+            return Task.FromResult(0);
+        }
+    }
+
+    // https://github.com/jbogard/MediatR/blob/master/samples/MediatR.Examples/GenericRequestPostProcessor.cs
+    public class GenericRequestPostProcessor<TRequest, TResponse> : IRequestPostProcessor<TRequest, TResponse>
+    {
+        private readonly TextWriter _writer;
+
+        public GenericRequestPostProcessor(TextWriter writer)
+        {
+            _writer = writer;
+        }
+
+        public Task Process(TRequest request, TResponse response)
+        {
+            _writer.WriteLine("- All Done");
+            return Task.FromResult(0);
+        }
+    }
+
+    // https://github.com/jbogard/MediatR/blob/master/samples/MediatR.Examples/GenericPipelineBehavior.cs
+    public class GenericPipelineBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+    {
+        private readonly TextWriter _writer;
+
+        public GenericPipelineBehavior(TextWriter writer)
+        {
+            _writer = writer;
+        }
+
+        public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next)
+        {
+            _writer.WriteLine("-- Handling Request");
+            var response = await next();
+            _writer.WriteLine("-- Finished Request");
+            return response;
         }
     }
 }
