@@ -193,6 +193,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MVC5_RController.cs" />
     <Compile Include="Data\ApplicationDbContext.cs" />
     <Compile Include="Data\Migrations\201707211355485_Initial.cs" />
     <Compile Include="Data\Migrations\201707211355485_Initial.Designer.cs">
@@ -209,6 +210,7 @@
     <Compile Include="Infrastructure\Logging\ExceptionLoggerAttribute.cs" />
     <Compile Include="Infrastructure\Logging\IMVCLogger.cs" />
     <Compile Include="Infrastructure\Logging\MVCLogger.cs" />
+    <Compile Include="Infrastructure\Mvc\ModelStateDictionaryExtensions.cs" />
     <Compile Include="Infrastructure\Sms\NoopSmsService.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

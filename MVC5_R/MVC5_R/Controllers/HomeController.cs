@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace MVC5_R.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : MVC5_RController
     {
         public ActionResult Index()
         {

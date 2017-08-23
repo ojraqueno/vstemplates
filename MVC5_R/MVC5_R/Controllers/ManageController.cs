@@ -10,15 +10,17 @@ using System.Web.Mvc;
 namespace MVC5_R.Controllers
 {
     [Authorize]
-    public class ManageController : Controller
+    public class ManageController : MVC5_RController
     {
         private readonly ApplicationSignInManager _signInManager;
         private readonly ApplicationUserManager _userManager;
+        private readonly IAuthenticationManager _authenticationManager;
 
-        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IAuthenticationManager authenticationManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _authenticationManager = authenticationManager;
         }
 
         //
@@ -41,7 +43,7 @@ namespace MVC5_R.Controllers
                 PhoneNumber = await _userManager.GetPhoneNumberAsync(userId),
                 TwoFactor = await _userManager.GetTwoFactorEnabledAsync(userId),
                 Logins = await _userManager.GetLoginsAsync(userId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
+                BrowserRemembered = await _authenticationManager.TwoFactorBrowserRememberedAsync(userId)
             };
             return View(model);
         }
@@ -211,7 +213,7 @@ namespace MVC5_R.Controllers
                 }
                 return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
             }
-            AddErrors(result);
+            ModelState.AddErrors(result);
             return View(model);
         }
 
@@ -240,7 +242,7 @@ namespace MVC5_R.Controllers
                     }
                     return RedirectToAction("Index", new { Message = ManageMessageId.SetPasswordSuccess });
                 }
-                AddErrors(result);
+                ModelState.AddErrors(result);
             }
 
             // If we got this far, something failed, redisplay form
@@ -261,7 +263,7 @@ namespace MVC5_R.Controllers
                 return View("Error");
             }
             var userLogins = await _userManager.GetLoginsAsync(User.Identity.GetUserId());
-            var otherLogins = AuthenticationManager.GetExternalAuthenticationTypes().Where(auth => userLogins.All(ul => auth.AuthenticationType != ul.LoginProvider)).ToList();
+            var otherLogins = _authenticationManager.GetExternalAuthenticationTypes().Where(auth => userLogins.All(ul => auth.AuthenticationType != ul.LoginProvider)).ToList();
             ViewBag.ShowRemoveButton = user.PasswordHash != null || userLogins.Count > 1;
             return View(new ManageLoginsViewModel
             {
@@ -284,7 +286,7 @@ namespace MVC5_R.Controllers
         // GET: /Manage/LinkLoginCallback
         public async Task<ActionResult> LinkLoginCallback()
         {
-            var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync(XsrfKey, User.Identity.GetUserId());
+            var loginInfo = await _authenticationManager.GetExternalLoginInfoAsync(XsrfKey, User.Identity.GetUserId());
             if (loginInfo == null)
             {
                 return RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
@@ -297,22 +299,6 @@ namespace MVC5_R.Controllers
 
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
-
-        private IAuthenticationManager AuthenticationManager
-        {
-            get
-            {
-                return HttpContext.GetOwinContext().Authentication;
-            }
-        }
-
-        private void AddErrors(IdentityResult result)
-        {
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error);
-            }
-        }
 
         private bool HasPassword()
         {

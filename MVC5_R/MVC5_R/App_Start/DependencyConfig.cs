@@ -2,6 +2,7 @@
 using MediatR;
 using MediatR.Pipeline;
 using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
 using MVC5_R.Data;
 using MVC5_R.Infrastructure.Identity;
 using MVC5_R.Infrastructure.Logging;
@@ -21,14 +22,14 @@ namespace MVC5_R
     {
         private static readonly Lazy<DependencyConfig> lazy = new Lazy<DependencyConfig>(() => new DependencyConfig());
 
-        public static DependencyConfig Instance { get { return lazy.Value; } }
-
-        public Container Container { get; private set; }
-
         private DependencyConfig()
         {
             Container = ConfigureContainer();
         }
+
+        public static DependencyConfig Instance { get { return lazy.Value; } }
+
+        public Container Container { get; private set; }
 
         public Container ConfigureContainer()
         {
@@ -40,11 +41,17 @@ namespace MVC5_R
             RegisterMediatR(container);
             container.Register<ApplicationSignInManager>(GetApplicationSignInManager, Lifestyle.Scoped);
             container.Register<ApplicationUserManager>(GetApplicationUserManager, Lifestyle.Scoped);
+            container.Register<IAuthenticationManager>(GetAuthenticationManager, Lifestyle.Scoped);
             container.Register<IMVCLogger, MVCLogger>(Lifestyle.Singleton);
 
             DependencyResolver.SetResolver(new SimpleInjectorDependencyResolver(container));
 
             return container;
+        }
+
+        public object GetService(Type serviceType)
+        {
+            return ((IServiceProvider)Container).GetService(serviceType);
         }
 
         private static ApplicationSignInManager GetApplicationSignInManager()
@@ -55,6 +62,11 @@ namespace MVC5_R
         private static ApplicationUserManager GetApplicationUserManager()
         {
             return HttpContext.Current.GetOwinContext().Get<ApplicationUserManager>();
+        }
+
+        private static IAuthenticationManager GetAuthenticationManager()
+        {
+            return HttpContext.Current.GetOwinContext().Authentication;
         }
 
         // More info: https://github.com/jbogard/MediatR/blob/master/samples/MediatR.Examples.SimpleInjector/Program.cs
@@ -93,27 +105,24 @@ namespace MVC5_R
             var assemblyOfValidationClasses = Assembly.GetExecutingAssembly();
             container.Register(typeof(IValidator<>), new[] { Assembly.GetExecutingAssembly() });
         }
-
-        public object GetService(Type serviceType)
-        {
-            return ((IServiceProvider)Container).GetService(serviceType);
-        }
     }
 
-    // https://github.com/jbogard/MediatR/blob/master/samples/MediatR.Examples/GenericRequestPreProcessor.cs
-    public class GenericRequestPreProcessor<TRequest> : IRequestPreProcessor<TRequest>
+    // https://github.com/jbogard/MediatR/blob/master/samples/MediatR.Examples/GenericPipelineBehavior.cs
+    public class GenericPipelineBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     {
         private readonly TextWriter _writer;
 
-        public GenericRequestPreProcessor(TextWriter writer)
+        public GenericPipelineBehavior(TextWriter writer)
         {
             _writer = writer;
         }
 
-        public Task Process(TRequest request)
+        public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next)
         {
-            _writer.WriteLine("- Starting Up");
-            return Task.FromResult(0);
+            _writer.WriteLine("-- Handling Request");
+            var response = await next();
+            _writer.WriteLine("-- Finished Request");
+            return response;
         }
     }
 
@@ -134,22 +143,20 @@ namespace MVC5_R
         }
     }
 
-    // https://github.com/jbogard/MediatR/blob/master/samples/MediatR.Examples/GenericPipelineBehavior.cs
-    public class GenericPipelineBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+    // https://github.com/jbogard/MediatR/blob/master/samples/MediatR.Examples/GenericRequestPreProcessor.cs
+    public class GenericRequestPreProcessor<TRequest> : IRequestPreProcessor<TRequest>
     {
         private readonly TextWriter _writer;
 
-        public GenericPipelineBehavior(TextWriter writer)
+        public GenericRequestPreProcessor(TextWriter writer)
         {
             _writer = writer;
         }
 
-        public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next)
+        public Task Process(TRequest request)
         {
-            _writer.WriteLine("-- Handling Request");
-            var response = await next();
-            _writer.WriteLine("-- Finished Request");
-            return response;
+            _writer.WriteLine("- Starting Up");
+            return Task.FromResult(0);
         }
     }
 }

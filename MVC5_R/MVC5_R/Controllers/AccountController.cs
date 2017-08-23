@@ -12,15 +12,17 @@ using System.Web.Mvc;
 namespace MVC5_R.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : MVC5_RController
     {
         private readonly ApplicationSignInManager _signInManager;
         private readonly ApplicationUserManager _userManager;
+        private readonly IAuthenticationManager _authenticationManager;
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IAuthenticationManager authenticationManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _authenticationManager = authenticationManager;
         }
 
         //
@@ -141,7 +143,7 @@ namespace MVC5_R.Controllers
 
                     return RedirectToAction("Index", "Home");
                 }
-                AddErrors(result);
+                ModelState.AddErrors(result);
             }
 
             // If we got this far, something failed, redisplay form
@@ -235,7 +237,7 @@ namespace MVC5_R.Controllers
             {
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
-            AddErrors(result);
+            ModelState.AddErrors(result);
             return View();
         }
 
@@ -298,7 +300,7 @@ namespace MVC5_R.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
         {
-            var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
+            var loginInfo = await _authenticationManager.GetExternalLoginInfoAsync();
             if (loginInfo == null)
             {
                 return RedirectToAction("Login");
@@ -341,7 +343,7 @@ namespace MVC5_R.Controllers
             if (ModelState.IsValid)
             {
                 // Get the information about the user from the external login provider
-                var info = await AuthenticationManager.GetExternalLoginInfoAsync();
+                var info = await _authenticationManager.GetExternalLoginInfoAsync();
                 if (info == null)
                 {
                     return View("ExternalLoginFailure");
@@ -357,7 +359,7 @@ namespace MVC5_R.Controllers
                         return RedirectToLocal(returnUrl);
                     }
                 }
-                AddErrors(result);
+                ModelState.AddErrors(result);
             }
 
             ViewBag.ReturnUrl = returnUrl;
@@ -370,7 +372,7 @@ namespace MVC5_R.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
-            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            _authenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
         }
 
@@ -386,31 +388,6 @@ namespace MVC5_R.Controllers
 
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
-
-        private IAuthenticationManager AuthenticationManager
-        {
-            get
-            {
-                return HttpContext.GetOwinContext().Authentication;
-            }
-        }
-
-        private void AddErrors(IdentityResult result)
-        {
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error);
-            }
-        }
-
-        private ActionResult RedirectToLocal(string returnUrl)
-        {
-            if (Url.IsLocalUrl(returnUrl))
-            {
-                return Redirect(returnUrl);
-            }
-            return RedirectToAction("Index", "Home");
-        }
 
         internal class ChallengeResult : HttpUnauthorizedResult
         {

@@ -24,7 +24,7 @@ namespace MVC5_R.Infrastructure.Email
             sendGridMessage.SetFrom(new EmailAddress(EmailAddresses.NoReply, $"{AppSettings.String("ApplicationName")} Team"));
             sendGridMessage.AddTo(message.Destination);
             sendGridMessage.SetSubject(message.Subject);
-            sendGridMessage.AddContent(MimeType.Text, message.Body);
+            sendGridMessage.AddContent(MimeType.Html, message.Body);
 
             await _client.SendEmailAsync(sendGridMessage);
         }
