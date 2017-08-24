@@ -204,6 +204,7 @@
     <Compile Include="Features\Account\Login.cs" />
     <Compile Include="Features\Account\LogOff.cs" />
     <Compile Include="Features\Account\Register.cs" />
+    <Compile Include="Features\Manage\ChangePassword.cs" />
     <Compile Include="Infrastructure\Configuration\AppSettings.cs" />
     <Compile Include="Infrastructure\Bundling\BundleCollectionExtensions.cs" />
     <Compile Include="Infrastructure\Email\EmailAddresses.cs" />
@@ -211,6 +212,7 @@
     <Compile Include="Infrastructure\Email\SendGridEmailService.cs" />
     <Compile Include="Infrastructure\Identity\ApplicationSignInManager.cs" />
     <Compile Include="Infrastructure\Identity\ApplicationUserManager.cs" />
+    <Compile Include="Infrastructure\Identity\IIdentityExtensions.cs" />
     <Compile Include="Infrastructure\Logging\ExceptionLoggerAttribute.cs" />
     <Compile Include="Infrastructure\Logging\IMVCLogger.cs" />
     <Compile Include="Infrastructure\Logging\MVCLogger.cs" />

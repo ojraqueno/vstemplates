@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using MediatR;
+using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using MVC5_R.Features.Manage;
 using MVC5_R.Infrastructure.Identity;
@@ -15,12 +16,14 @@ namespace MVC5_R.Controllers
         private readonly ApplicationSignInManager _signInManager;
         private readonly ApplicationUserManager _userManager;
         private readonly IAuthenticationManager _authenticationManager;
+        private readonly IMediator _mediator;
 
-        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IAuthenticationManager authenticationManager)
+        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IAuthenticationManager authenticationManager, IMediator mediator)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _authenticationManager = authenticationManager;
+            _mediator = mediator;
         }
 
         //
@@ -185,36 +188,24 @@ namespace MVC5_R.Controllers
             }
             return RedirectToAction("Index", new { Message = ManageMessageId.RemovePhoneSuccess });
         }
-
-        //
-        // GET: /Manage/ChangePassword
+        
         public ActionResult ChangePassword()
         {
             return View();
         }
-
-        //
-        // POST: /Manage/ChangePassword
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
+        public async Task<ActionResult> ChangePassword(ChangePassword.Command command)
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View(command);
             }
-            var result = await _userManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
-            if (result.Succeeded)
-            {
-                var user = await _userManager.FindByIdAsync(User.Identity.GetUserId());
-                if (user != null)
-                {
-                    await _signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                }
-                return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
-            }
-            ModelState.AddErrors(result);
-            return View(model);
+
+            await _mediator.Send(command);
+
+            return RedirectToAction(nameof(Index), new { Message = ManageMessageId.ChangePasswordSuccess });
         }
 
         //

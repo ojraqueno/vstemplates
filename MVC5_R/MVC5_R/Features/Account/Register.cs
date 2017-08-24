@@ -1,17 +1,15 @@
-﻿using MVC5_R.Controllers;
-using MVC5_R.Data;
-using MVC5_R.Infrastructure.Identity;
-using MVC5_R.Infrastructure;
-using MVC5_R.Models;
-using FluentValidation;
+﻿using FluentValidation;
 using MediatR;
 using Microsoft.AspNet.Identity;
+using MVC5_R.Controllers;
+using MVC5_R.Data;
+using MVC5_R.Infrastructure.Configuration;
+using MVC5_R.Infrastructure.Identity;
+using MVC5_R.Models;
 using System;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using MVC5_R.Infrastructure.Configuration;
 
 namespace MVC5_R.Features.Account
 {
@@ -26,10 +24,12 @@ namespace MVC5_R.Features.Account
 
         public class Validator : AbstractValidator<Command>
         {
-            private readonly PasswordValidator _passwordValidator = ApplicationUserManager.CreatePasswordValidator();
+            private readonly PasswordValidator _passwordValidator;
 
             public Validator()
             {
+                _passwordValidator = ApplicationUserManager.CreatePasswordValidator();
+
                 RuleFor(c => c.Email)
                     .NotEmpty();
 
