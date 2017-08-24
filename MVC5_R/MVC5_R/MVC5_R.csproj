@@ -236,7 +236,6 @@
     <Compile Include="Features\Account\SendCodeViewModel.cs" />
     <Compile Include="Features\Account\VerifyCodeViewModel.cs" />
     <Compile Include="Features\Manage\AddPhoneNumberViewModel.cs" />
-    <Compile Include="Features\Manage\ChangePasswordViewModel.cs" />
     <Compile Include="Features\Manage\ConfigureTwoFactorViewModel.cs" />
     <Compile Include="Features\Manage\FactorViewModel.cs" />
     <Compile Include="Features\Manage\IndexViewModel.cs" />
