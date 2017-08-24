@@ -29,14 +29,7 @@ namespace MVC5_R.Infrastructure.Identity
             };
 
             // Configure validation logic for passwords
-            manager.PasswordValidator = new PasswordValidator
-            {
-                RequiredLength = 6,
-                RequireNonLetterOrDigit = true,
-                RequireDigit = true,
-                RequireLowercase = true,
-                RequireUppercase = true,
-            };
+            manager.PasswordValidator = CreatePasswordValidator();
 
             // Configure user lockout defaults
             manager.UserLockoutEnabledByDefault = true;
@@ -67,6 +60,18 @@ namespace MVC5_R.Infrastructure.Identity
             }
 
             return manager;
+        }
+
+        public static PasswordValidator CreatePasswordValidator()
+        {
+            return new PasswordValidator
+            {
+                RequiredLength = 6,
+                RequireNonLetterOrDigit = false,
+                RequireDigit = true,
+                RequireLowercase = false,
+                RequireUppercase = false,
+            };
         }
     }
 }

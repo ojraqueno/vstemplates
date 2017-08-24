@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using MediatR;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using MVC5_R.Features.Account;
@@ -17,53 +17,49 @@ namespace MVC5_R.Controllers
         private readonly ApplicationSignInManager _signInManager;
         private readonly ApplicationUserManager _userManager;
         private readonly IAuthenticationManager _authenticationManager;
+        private readonly IMediator _mediator;
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IAuthenticationManager authenticationManager)
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IAuthenticationManager authenticationManager, IMediator mediator)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _authenticationManager = authenticationManager;
+            _mediator = mediator;
         }
 
-        //
-        // GET: /Account/Login
+        [HttpGet]
         [AllowAnonymous]
-        public ActionResult Login(string returnUrl)
+        public async Task<ActionResult> Login(Login.Query query)
         {
-            ViewBag.ReturnUrl = returnUrl;
-            return View();
+            var command = await _mediator.Send(query);
+
+            return View(command);
         }
 
-        //
-        // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+        public async Task<ActionResult> Login(Login.Command command)
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View(command);
             }
 
-            // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-            switch (result)
+            var signInStatus = await _mediator.Send(command);
+
+            switch (signInStatus)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
-
+                    return RedirectToLocal(command.ReturnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
-
                 case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-
+                    return RedirectToAction("SendCode", new { ReturnUrl = command.ReturnUrl, RememberMe = command.RememberMe });
                 case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Invalid login attempt.");
-                    return View(model);
+                    return View(command);
             }
         }
 
@@ -111,56 +107,39 @@ namespace MVC5_R.Controllers
                     return View(model);
             }
         }
-
-        //
-        // GET: /Account/Register
+        
         [AllowAnonymous]
         public ActionResult Register()
         {
             return View();
         }
-
-        //
-        // POST: /Account/Register
+        
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(Register.Command command)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await _userManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    await _signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await _userManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await _userManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                    return RedirectToAction("Index", "Home");
-                }
-                ModelState.AddErrors(result);
+                return View(command);
             }
 
-            // If we got this far, something failed, redisplay form
-            return View(model);
-        }
+            await _mediator.Send(command);
 
-        //
-        // GET: /Account/ConfirmEmail
+            return RedirectToAction(nameof(HomeController.Index), nameof(HomeController));
+        }
+        
         [AllowAnonymous]
-        public async Task<ActionResult> ConfirmEmail(string userId, string code)
+        public async Task<ActionResult> ConfirmEmail(ConfirmEmail.Command command)
         {
-            if (userId == null || code == null)
+            if (!ModelState.IsValid)
             {
                 return View("Error");
             }
-            var result = await _userManager.ConfirmEmailAsync(userId, code);
-            return View(result.Succeeded ? "ConfirmEmail" : "Error");
+
+            await _mediator.Send(command);
+
+            return View(nameof(ConfirmEmail));
         }
 
         //
@@ -366,14 +345,13 @@ namespace MVC5_R.Controllers
             return View(model);
         }
 
-        //
-        // POST: /Account/LogOff
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult LogOff()
+        public async Task<ActionResult> LogOff(LogOff.Command command)
         {
-            _authenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            await _mediator.Send(command);
+
+            return RedirectToAction(nameof(AccountController.Login), nameof(AccountController));
         }
 
         //

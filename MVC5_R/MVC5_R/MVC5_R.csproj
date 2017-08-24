@@ -200,6 +200,10 @@
       <DependentUpon>201707211355485_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Data\Migrations\Configuration.cs" />
+    <Compile Include="Features\Account\ConfirmEmail.cs" />
+    <Compile Include="Features\Account\Login.cs" />
+    <Compile Include="Features\Account\LogOff.cs" />
+    <Compile Include="Features\Account\Register.cs" />
     <Compile Include="Infrastructure\Configuration\AppSettings.cs" />
     <Compile Include="Infrastructure\Bundling\BundleCollectionExtensions.cs" />
     <Compile Include="Infrastructure\Email\EmailAddresses.cs" />
@@ -226,8 +230,6 @@
     <Compile Include="Features\Account\ExternalLoginListViewModel.cs" />
     <Compile Include="Features\Account\ForgotPasswordViewModel.cs" />
     <Compile Include="Features\Account\ForgotViewModel.cs" />
-    <Compile Include="Features\Account\LoginViewModel.cs" />
-    <Compile Include="Features\Account\RegisterViewModel.cs" />
     <Compile Include="Features\Account\ResetPasswordViewModel.cs" />
     <Compile Include="Features\Account\SendCodeViewModel.cs" />
     <Compile Include="Features\Account\VerifyCodeViewModel.cs" />
