@@ -201,6 +201,7 @@
     </Compile>
     <Compile Include="Data\Migrations\Configuration.cs" />
     <Compile Include="Features\Account\ConfirmEmail.cs" />
+    <Compile Include="Features\Account\ForgotPassword.cs" />
     <Compile Include="Features\Account\Login.cs" />
     <Compile Include="Features\Account\LogOff.cs" />
     <Compile Include="Features\Account\Register.cs" />
