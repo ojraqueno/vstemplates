@@ -216,6 +216,7 @@
     <Compile Include="Infrastructure\Logging\ExceptionLoggerAttribute.cs" />
     <Compile Include="Infrastructure\Logging\IMVCLogger.cs" />
     <Compile Include="Infrastructure\Logging\MVCLogger.cs" />
+    <Compile Include="Infrastructure\Mvc\JsonCamelCaseResult.cs" />
     <Compile Include="Infrastructure\Mvc\ModelStateDictionaryExtensions.cs" />
     <Compile Include="Infrastructure\Sms\NoopSmsService.cs" />
     <Compile Include="Global.asax.cs">
@@ -517,6 +518,8 @@
     <Content Include="bower_components\jquery\src\var\support.js" />
     <Content Include="bower_components\jquery\src\var\toString.js" />
     <Content Include="bower_components\jquery\src\wrap.js" />
+    <Content Include="bower_components\Microsoft.jQuery.Unobtrusive.Ajax\jquery.unobtrusive-ajax.js" />
+    <Content Include="bower_components\Microsoft.jQuery.Unobtrusive.Ajax\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Content\site.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -733,6 +736,8 @@
     <Content Include="bower_components\font-awesome\scss\_screen-reader.scss" />
     <Content Include="bower_components\font-awesome\scss\_stacked.scss" />
     <Content Include="bower_components\font-awesome\scss\_variables.scss" />
+    <Content Include="bower_components\Microsoft.jQuery.Unobtrusive.Ajax\.bower.json" />
+    <Content Include="bower_components\Microsoft.jQuery.Unobtrusive.Ajax\bower.json" />
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>

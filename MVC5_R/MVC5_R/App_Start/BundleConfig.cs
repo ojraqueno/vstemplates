@@ -21,6 +21,7 @@ namespace MVC5_R
                 "~/bower_components/jquery/dist/jquery.min.js",
                 "~/bower_components/jquery-validation/dist/jquery.validate.min.js",
                 "~/bower_components/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js",
+                "~/bower_components/Microsoft.jQuery.Unobtrusive.Ajax/jquery.unobtrusive-ajax.min.js",
                 "~/bower_components/bootstrap/dist/js/bootstrap.min.js",
                 "~/bower_components/angular/angular.min.js",
                 "~/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js",

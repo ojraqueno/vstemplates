@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using MVC5_R.Infrastructure.Mvc;
+using System.Web.Mvc;
 
 namespace MVC5_R.Controllers
 {
@@ -10,6 +11,11 @@ namespace MVC5_R.Controllers
             {
                 return $"{Request.Url.Scheme}://{Request.Url.Authority}{Request.ApplicationPath.TrimEnd('/')}";
             }
+        }
+
+        protected JsonCamelCaseResult JsonCamelCase(object data)
+        {
+            return new JsonCamelCaseResult(data);
         }
 
         protected new RedirectToRouteResult RedirectToAction(string actionName, string controllerName)
