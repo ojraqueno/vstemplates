@@ -94,7 +94,7 @@ namespace MVC5_R.Features.Account
                     var result = await _userManager.ResetPasswordAsync(user.Id, command.Code, command.NewPassword);
                     if (!result.Succeeded)
                     {
-                        throw new Exception("Unable to reset password.");
+                        throw new Exception("Unable to reset password. The link may have expired.");
                     }
                 }
             }
