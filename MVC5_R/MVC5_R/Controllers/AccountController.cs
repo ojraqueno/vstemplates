@@ -225,42 +225,34 @@ namespace MVC5_R.Controllers
             return RedirectToAction(nameof(HomeController.Index), nameof(HomeController));
         }
 
-        //
-        // GET: /Account/ResetPassword
         [AllowAnonymous]
-        public ActionResult ResetPassword(string code)
-        {
-            return code == null ? View("Error") : View();
-        }
-
-        //
-        // POST: /Account/ResetPassword
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
+        public async Task<ActionResult> ResetPassword(ResetPassword.Query query)
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View("Error");
             }
-            var user = await _userManager.FindByNameAsync(model.Email);
-            if (user == null)
-            {
-                // Don't reveal that the user does not exist
-                return RedirectToAction("ResetPasswordConfirmation", "Account");
-            }
-            var result = await _userManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
-            if (result.Succeeded)
-            {
-                return RedirectToAction("ResetPasswordConfirmation", "Account");
-            }
-            ModelState.AddErrors(result);
-            return View();
+
+            var command = await _mediator.Send(query);
+
+            return View(command);
         }
 
-        //
-        // GET: /Account/ResetPasswordConfirmation
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ResetPassword(ResetPassword.Command command)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(command);
+            }
+
+            await _mediator.Send(command);
+
+            return RedirectToAction(nameof(ResetPasswordConfirmation));
+        }
+
         [AllowAnonymous]
         public ActionResult ResetPasswordConfirmation()
         {

@@ -206,6 +206,7 @@
     <Compile Include="Features\Account\Login.cs" />
     <Compile Include="Features\Account\LogOff.cs" />
     <Compile Include="Features\Account\Register.cs" />
+    <Compile Include="Features\Account\ResetPassword.cs" />
     <Compile Include="Features\Manage\ChangePassword.cs" />
     <Compile Include="Features\Manage\ManageMessageId.cs" />
     <Compile Include="Infrastructure\Configuration\AppSettings.cs" />
@@ -234,9 +235,6 @@
     <Compile Include="Startup.cs" />
     <Compile Include="Features\Account\ExternalLoginConfirmationViewModel.cs" />
     <Compile Include="Features\Account\ExternalLoginListViewModel.cs" />
-    <Compile Include="Features\Account\ForgotPasswordViewModel.cs" />
-    <Compile Include="Features\Account\ForgotViewModel.cs" />
-    <Compile Include="Features\Account\ResetPasswordViewModel.cs" />
     <Compile Include="Features\Account\SendCodeViewModel.cs" />
     <Compile Include="Features\Account\VerifyCodeViewModel.cs" />
     <Compile Include="Features\Manage\AddPhoneNumberViewModel.cs" />
