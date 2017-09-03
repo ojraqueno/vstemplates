@@ -7,6 +7,7 @@ using FluentValidation;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using System.Security.Principal;
+using MVC5_R.Infrastructure.Startup;
 
 namespace MVC5_R.Features.Manage
 {

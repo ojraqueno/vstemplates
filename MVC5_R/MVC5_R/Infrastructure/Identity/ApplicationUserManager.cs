@@ -2,7 +2,7 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
-using MVC5_R.Data;
+using MVC5_R.Infrastructure.Data;
 using MVC5_R.Infrastructure.Email;
 using MVC5_R.Infrastructure.Sms;
 using MVC5_R.Models;

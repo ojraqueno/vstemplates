@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using MVC5_R.Infrastructure.Startup;
+using System.Web.Mvc;
 
 namespace MVC5_R.Infrastructure.Logging
 {

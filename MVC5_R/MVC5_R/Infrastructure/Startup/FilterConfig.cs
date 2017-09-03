@@ -1,7 +1,7 @@
 ﻿using MVC5_R.Infrastructure.Logging;
 using System.Web.Mvc;
 
-namespace MVC5_R
+namespace MVC5_R.Infrastructure.Startup
 {
     public class FilterConfig
     {

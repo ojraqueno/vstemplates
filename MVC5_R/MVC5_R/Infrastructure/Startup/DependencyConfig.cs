@@ -3,7 +3,7 @@ using MediatR;
 using MediatR.Pipeline;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using MVC5_R.Data;
+using MVC5_R.Infrastructure.Data;
 using MVC5_R.Infrastructure.Identity;
 using MVC5_R.Infrastructure.Logging;
 using SimpleInjector;
@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
-namespace MVC5_R
+namespace MVC5_R.Infrastructure.Startup
 {
     public class DependencyConfig : IServiceProvider
     {

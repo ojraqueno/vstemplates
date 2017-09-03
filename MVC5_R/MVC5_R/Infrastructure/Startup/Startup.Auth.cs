@@ -6,7 +6,7 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using MVC5_R.Models;
-using MVC5_R.Data;
+using MVC5_R.Infrastructure.Data;
 using MVC5_R.Infrastructure.Identity;
 
 namespace MVC5_R

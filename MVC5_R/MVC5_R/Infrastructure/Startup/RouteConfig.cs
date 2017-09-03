@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace MVC5_R
+namespace MVC5_R.Infrastructure.Startup
 {
     public class RouteConfig
     {

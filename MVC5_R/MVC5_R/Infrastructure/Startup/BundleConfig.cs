@@ -1,7 +1,7 @@
 ﻿using MVC5_R.Infrastructure.Bundling;
 using System.Web.Optimization;
 
-namespace MVC5_R
+namespace MVC5_R.Infrastructure.Startup
 {
     public class BundleConfig
     {

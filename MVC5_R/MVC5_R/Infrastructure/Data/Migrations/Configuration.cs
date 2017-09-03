@@ -1,4 +1,4 @@
-﻿namespace MVC5_R.Data.Migrations
+﻿namespace MVC5_R.Infrastructure.Data.Migrations
 {
     using System.Data.Entity.Migrations;
 
@@ -7,7 +7,7 @@
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            MigrationsDirectory = @"Data\Migrations";
+            MigrationsDirectory = @"Infrastructure\Data\Migrations";
         }
 
         protected override void Seed(ApplicationDbContext context)

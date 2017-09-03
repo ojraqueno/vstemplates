@@ -2,7 +2,7 @@
 using MediatR;
 using Microsoft.AspNet.Identity;
 using MVC5_R.Controllers;
-using MVC5_R.Data;
+using MVC5_R.Infrastructure.Data;
 using MVC5_R.Infrastructure.Configuration;
 using MVC5_R.Infrastructure.Identity;
 using MVC5_R.Models;

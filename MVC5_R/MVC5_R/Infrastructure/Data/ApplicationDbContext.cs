@@ -2,7 +2,7 @@
 using MVC5_R.Models;
 using System.Data.Entity;
 
-namespace MVC5_R.Data
+namespace MVC5_R.Infrastructure.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {

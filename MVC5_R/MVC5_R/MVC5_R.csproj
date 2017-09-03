@@ -184,22 +184,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="App_Start\DependencyConfig.cs" />
-    <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="App_Start\ValidationConfig.cs" />
+    <Compile Include="Infrastructure\Startup\BundleConfig.cs" />
+    <Compile Include="Infrastructure\Startup\DependencyConfig.cs" />
+    <Compile Include="Infrastructure\Startup\FilterConfig.cs" />
+    <Compile Include="Infrastructure\Startup\RouteConfig.cs" />
+    <Compile Include="Infrastructure\Startup\Startup.Auth.cs" />
+    <Compile Include="Infrastructure\Startup\ValidationConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Infrastructure\Mvc\AppController.cs" />
-    <Compile Include="Data\ApplicationDbContext.cs" />
-    <Compile Include="Data\Migrations\201707211355485_Initial.cs" />
-    <Compile Include="Data\Migrations\201707211355485_Initial.Designer.cs">
+    <Compile Include="Infrastructure\Data\ApplicationDbContext.cs" />
+    <Compile Include="Infrastructure\Data\Migrations\201707211355485_Initial.cs" />
+    <Compile Include="Infrastructure\Data\Migrations\201707211355485_Initial.Designer.cs">
       <DependentUpon>201707211355485_Initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Data\Migrations\Configuration.cs" />
+    <Compile Include="Infrastructure\Data\Migrations\Configuration.cs" />
     <Compile Include="Features\Account\ChallengeResult.cs" />
     <Compile Include="Features\Account\ConfirmEmail.cs" />
     <Compile Include="Features\Account\ForgotPassword.cs" />
@@ -740,7 +740,7 @@
     <Content Include="wwwroot\lib\Microsoft.jQuery.Unobtrusive.Ajax\bower.json" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Data\Migrations\201707211355485_Initial.resx">
+    <EmbeddedResource Include="Infrastructure\Data\Migrations\201707211355485_Initial.resx">
       <DependentUpon>201707211355485_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
