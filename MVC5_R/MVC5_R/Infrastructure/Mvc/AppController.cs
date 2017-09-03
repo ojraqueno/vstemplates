@@ -1,9 +1,9 @@
 ﻿using MVC5_R.Infrastructure.Mvc;
 using System.Web.Mvc;
 
-namespace MVC5_R.Controllers
+namespace MVC5_R.Infrastructure.Mvc
 {
-    public class MVC5_RController : Controller
+    public class AppController : Controller
     {
         protected string BaseUrl
         {
@@ -31,7 +31,8 @@ namespace MVC5_R.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction(nameof(HomeController.Index), nameof(HomeController));
+
+            return Redirect(Url.RouteUrl("Default"));
         }
     }
 }

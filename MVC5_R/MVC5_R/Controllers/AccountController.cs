@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using MVC5_R.Features.Account;
 using MVC5_R.Infrastructure.Identity;
+using MVC5_R.Infrastructure.Mvc;
 using MVC5_R.Models;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ using System.Web.Mvc;
 namespace MVC5_R.Controllers
 {
     [Authorize]
-    public class AccountController : MVC5_RController
+    public class AccountController : AppController
     {
         private readonly IAuthenticationManager _authenticationManager;
         private readonly IMediator _mediator;
