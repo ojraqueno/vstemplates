@@ -227,7 +227,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\Bundling\NonOrderingBundleOrderer.cs" />
-    <Compile Include="Infrastructure\Validation\FluentValidationModelBinder.cs" />
     <Compile Include="Infrastructure\Validation\FluentValidatorFactory.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\LogEntry.cs" />
