@@ -56,11 +56,11 @@ namespace MVC5_R.Features.Account
                 _signInManager = signInManager;
             }
 
-            public async Task<SignInStatus> Handle(Command message)
+            public async Task<SignInStatus> Handle(Command command)
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, change to shouldLockout: true
-                return await _signInManager.PasswordSignInAsync(message.Email, message.Password, message.RememberMe, shouldLockout: false);
+                return await _signInManager.PasswordSignInAsync(command.Email, command.Password, command.RememberMe, shouldLockout: false);
             }
         }
     }
