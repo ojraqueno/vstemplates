@@ -13,18 +13,18 @@ namespace MVC5_R
         private static void AddCoreBundles(BundleCollection bundles)
         {
             bundles.AddStyleBundle("~/stylebundles/core",
-                "~/bower_components/bootstrap/dist/css/bootstrap.css",
-                "~/bower_components/font-awesome/css/font-awesome.min.css",
+                "~/Scripts/lib/bootstrap/dist/css/bootstrap.css",
+                "~/Scripts/lib/font-awesome/css/font-awesome.min.css",
                 "~/Content/site.css");
 
             bundles.AddScriptBundle("~/scriptbundles/core",
-                "~/bower_components/jquery/dist/jquery.min.js",
-                "~/bower_components/jquery-validation/dist/jquery.validate.min.js",
-                "~/bower_components/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js",
-                "~/bower_components/Microsoft.jQuery.Unobtrusive.Ajax/jquery.unobtrusive-ajax.min.js",
-                "~/bower_components/bootstrap/dist/js/bootstrap.min.js",
-                "~/bower_components/angular/angular.min.js",
-                "~/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js",
+                "~/Scripts/lib/jquery/dist/jquery.min.js",
+                "~/Scripts/lib/jquery-validation/dist/jquery.validate.min.js",
+                "~/Scripts/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js",
+                "~/Scripts/lib/Microsoft.jQuery.Unobtrusive.Ajax/jquery.unobtrusive-ajax.min.js",
+                "~/Scripts/lib/bootstrap/dist/js/bootstrap.min.js",
+                "~/Scripts/lib/angular/angular.min.js",
+                "~/Scripts/lib/angular-bootstrap/ui-bootstrap-tpls.min.js",
                 "~/Scripts/Shared/app.js");
         }
     }
