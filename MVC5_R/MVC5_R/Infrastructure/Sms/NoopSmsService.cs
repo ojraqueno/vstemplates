@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using System.Threading.Tasks;
 
-namespace MVC5_R.WebApp.Infrastructure.Sms
+namespace MVC5_R.Infrastructure.Sms
 {
     public class NoopSmsService : IIdentityMessageService
     {

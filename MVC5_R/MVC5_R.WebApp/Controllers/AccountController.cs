@@ -2,9 +2,9 @@
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using MVC5_R.WebApp.Features.Account;
-using MVC5_R.WebApp.Infrastructure.Identity;
+using MVC5_R.Infrastructure.Identity;
 using MVC5_R.WebApp.Infrastructure.Mvc;
-using MVC5_R.WebApp.Models;
+using MVC5_R.Models;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;

@@ -2,7 +2,7 @@
 using System;
 using System.Web;
 using System.Threading.Tasks;
-using MVC5_R.WebApp.Infrastructure.Identity;
+using MVC5_R.Infrastructure.Identity;
 using FluentValidation;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
@@ -64,7 +64,7 @@ namespace MVC5_R.WebApp.Features.Manage
 
             private bool IsValidPasswordForUser(string oldPassword)
             {
-                var currentUser = HttpContext.Current.User.Identity.GetCurrentUser();
+                var currentUser = _userManager.FindByName(HttpContext.Current.User.Identity.Name);
                 return _userManager.CheckPassword(currentUser, oldPassword);
             }
         }
@@ -82,7 +82,7 @@ namespace MVC5_R.WebApp.Features.Manage
 
             public async Task Handle(Command command)
             {
-                var currentUser = HttpContext.Current.User.Identity.GetCurrentUser();
+                var currentUser = _userManager.FindByName(HttpContext.Current.User.Identity.Name);
                 var changePasswordResult = await _userManager.ChangePasswordAsync(currentUser.Id, command.OldPassword, command.NewPassword);
                 if (!changePasswordResult.Succeeded)
                 {

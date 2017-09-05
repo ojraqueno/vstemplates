@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using MediatR;
-using MVC5_R.WebApp.Infrastructure.Identity;
+using MVC5_R.Infrastructure.Identity;
 using System;
 using System.Threading.Tasks;
 

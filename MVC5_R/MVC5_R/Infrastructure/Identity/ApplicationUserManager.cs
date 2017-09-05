@@ -2,13 +2,13 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
-using MVC5_R.WebApp.Infrastructure.Data;
-using MVC5_R.WebApp.Infrastructure.Email;
-using MVC5_R.WebApp.Infrastructure.Sms;
-using MVC5_R.WebApp.Models;
+using MVC5_R.Infrastructure.Data;
+using MVC5_R.Infrastructure.Email;
+using MVC5_R.Infrastructure.Sms;
+using MVC5_R.Models;
 using System;
 
-namespace MVC5_R.WebApp.Infrastructure.Identity
+namespace MVC5_R.Infrastructure.Identity
 {
     // Configure the application user manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application.
     public class ApplicationUserManager : UserManager<ApplicationUser>

@@ -1,5 +1,4 @@
-﻿using MVC5_R.WebApp.Infrastructure.Mvc;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace MVC5_R.WebApp.Infrastructure.Mvc
 {

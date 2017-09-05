@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 
-namespace MVC5_R.WebApp.Infrastructure.Configuration
+namespace MVC5_R.Infrastructure.Configuration
 {
     public static class AppSettings
     {

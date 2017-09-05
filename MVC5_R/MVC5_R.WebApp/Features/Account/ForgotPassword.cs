@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using MediatR;
 using MVC5_R.WebApp.Controllers;
-using MVC5_R.WebApp.Infrastructure.Identity;
+using MVC5_R.Infrastructure.Identity;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;

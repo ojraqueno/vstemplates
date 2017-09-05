@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MVC5_R.WebApp.Models
+namespace MVC5_R.Models
 {
     public class LogEntry
     {

@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
-using MVC5_R.WebApp.Models;
+using MVC5_R.Models;
 using System.Data.Entity;
 
-namespace MVC5_R.WebApp.Infrastructure.Data
+namespace MVC5_R.Infrastructure.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {

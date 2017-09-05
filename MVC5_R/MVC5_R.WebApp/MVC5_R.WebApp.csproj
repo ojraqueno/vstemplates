@@ -194,12 +194,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Infrastructure\Mvc\AppController.cs" />
-    <Compile Include="Infrastructure\Data\ApplicationDbContext.cs" />
-    <Compile Include="Infrastructure\Data\Migrations\201707211355485_Initial.cs" />
-    <Compile Include="Infrastructure\Data\Migrations\201707211355485_Initial.Designer.cs">
-      <DependentUpon>201707211355485_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Infrastructure\Data\Migrations\Configuration.cs" />
     <Compile Include="Features\Account\ChallengeResult.cs" />
     <Compile Include="Features\Account\ConfirmEmail.cs" />
     <Compile Include="Features\Account\ForgotPassword.cs" />
@@ -209,27 +203,17 @@
     <Compile Include="Features\Account\ResetPassword.cs" />
     <Compile Include="Features\Manage\ChangePassword.cs" />
     <Compile Include="Features\Manage\ManageMessageId.cs" />
-    <Compile Include="Infrastructure\Configuration\AppSettings.cs" />
     <Compile Include="Infrastructure\Bundling\BundleCollectionExtensions.cs" />
-    <Compile Include="Infrastructure\Email\EmailAddresses.cs" />
-    <Compile Include="Infrastructure\Email\NoopEmailService.cs" />
-    <Compile Include="Infrastructure\Email\SendGridEmailService.cs" />
-    <Compile Include="Infrastructure\Identity\ApplicationSignInManager.cs" />
-    <Compile Include="Infrastructure\Identity\ApplicationUserManager.cs" />
-    <Compile Include="Infrastructure\Identity\IIdentityExtensions.cs" />
     <Compile Include="Infrastructure\Logging\ExceptionLoggerAttribute.cs" />
     <Compile Include="Infrastructure\Logging\IMVCLogger.cs" />
     <Compile Include="Infrastructure\Logging\MVCLogger.cs" />
     <Compile Include="Infrastructure\Mvc\JsonCamelCaseResult.cs" />
     <Compile Include="Infrastructure\Mvc\ModelStateDictionaryExtensions.cs" />
-    <Compile Include="Infrastructure\Sms\NoopSmsService.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\Bundling\NonOrderingBundleOrderer.cs" />
     <Compile Include="Infrastructure\Validation\FluentValidatorFactory.cs" />
-    <Compile Include="Models\ApplicationUser.cs" />
-    <Compile Include="Models\LogEntry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Features\Account\ExternalLoginConfirmationViewModel.cs" />
@@ -559,7 +543,12 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\MVC5_R\MVC5_R.csproj">
+      <Project>{916b5c74-c47d-4d11-a710-d60ef36561c1}</Project>
+      <Name>MVC5_R</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
     <Content Include=".bowerrc" />
@@ -737,11 +726,6 @@
     <Content Include="wwwroot\lib\jquery-validation-unobtrusive\bower.json" />
     <Content Include="wwwroot\lib\Microsoft.jQuery.Unobtrusive.Ajax\.bower.json" />
     <Content Include="wwwroot\lib\Microsoft.jQuery.Unobtrusive.Ajax\bower.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Infrastructure\Data\Migrations\201707211355485_Initial.resx">
-      <DependentUpon>201707211355485_Initial.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="wwwroot\scripts\shared\app.js" />

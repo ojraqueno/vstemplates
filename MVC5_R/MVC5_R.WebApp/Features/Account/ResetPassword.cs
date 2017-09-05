@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using MediatR;
 using Microsoft.AspNet.Identity;
-using MVC5_R.WebApp.Infrastructure.Identity;
+using MVC5_R.Infrastructure.Identity;
 using MVC5_R.WebApp.Infrastructure.Startup;
 using System;
 using System.Threading.Tasks;

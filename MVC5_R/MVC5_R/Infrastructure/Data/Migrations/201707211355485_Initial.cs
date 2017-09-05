@@ -1,4 +1,4 @@
-namespace MVC5_R.WebApp.Infrastructure.Data.Migrations
+namespace MVC5_R.Infrastructure.Data.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;

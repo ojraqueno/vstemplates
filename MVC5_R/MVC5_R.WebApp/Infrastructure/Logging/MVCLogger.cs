@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
-using MVC5_R.WebApp.Infrastructure.Data;
-using MVC5_R.WebApp.Models;
+using MVC5_R.Infrastructure.Data;
+using MVC5_R.Models;
 using System;
 using System.Web.Mvc;
 

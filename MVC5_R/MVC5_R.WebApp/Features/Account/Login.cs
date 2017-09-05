@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using MediatR;
 using Microsoft.AspNet.Identity.Owin;
-using MVC5_R.WebApp.Infrastructure.Identity;
+using MVC5_R.Infrastructure.Identity;
 using System.Threading.Tasks;
 
 namespace MVC5_R.WebApp.Features.Account
