@@ -17,8 +17,7 @@ This template uses:
 * [FluentValidation] - to declutter MediatR classes and enable custom validation
 * [SimpleInjector] - for dependency injection
 * [SendGrid] - for sending email
-
-Front-end package management is handled by [Bower].
+* [Bower] - for managing front-end packages.
 
 There is no service layer and no repository layer. Most of the viewmodels have been replaced with MediatR request and response classes. MediatR handlers implement business logic.
 
