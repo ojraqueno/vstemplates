@@ -10,6 +10,7 @@ using System;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using MVC5_R.Infrastructure.Email;
 
 namespace MVC5_R.WebApp.Features.Account
 {
@@ -78,12 +79,25 @@ namespace MVC5_R.WebApp.Features.Account
 
                 await _signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
+                var postRegistrationEmailMessage = await GetPostRegistrationEmailMessage(user);
+
+                // No await means fire and forget
+                _userManager.SendEmailAsync(user.Id, postRegistrationEmailMessage);
+            }
+
+            private async Task<EmailMessage> GetPostRegistrationEmailMessage(ApplicationUser user)
+            {
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
                 var urlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user.Id);
                 var callbackUrl = urlHelper.Action(nameof(AccountController.ConfirmEmail), "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Current.Request.Url.Scheme);
-                await _userManager.SendEmailAsync(user.Id, "Confirm your email", $"Welcome to {AppSettings.String("ApplicationName")}! Please confirm your email by clicking <a href=\"" + callbackUrl + "\">here</a>.");
+
+                return new EmailMessage
+                {
+                    Body = $"Welcome to {AppSettings.String("ApplicationName")}! Please confirm your email by clicking <a href=\"" + callbackUrl + "\">here</a>.",
+                    Subject = "Confirm your email"
+                };
             }
         }
     }

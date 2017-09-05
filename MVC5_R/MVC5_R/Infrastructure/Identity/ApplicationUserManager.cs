@@ -7,6 +7,7 @@ using MVC5_R.Infrastructure.Email;
 using MVC5_R.Infrastructure.Sms;
 using MVC5_R.Models;
 using System;
+using System.Threading.Tasks;
 
 namespace MVC5_R.Infrastructure.Identity
 {
@@ -16,6 +17,11 @@ namespace MVC5_R.Infrastructure.Identity
         public ApplicationUserManager(IUserStore<ApplicationUser> store)
             : base(store)
         {
+        }
+
+        public Task SendEmailAsync(string userId, EmailMessage emailMessage)
+        {
+            return SendEmailAsync(userId, emailMessage.Subject, emailMessage.Body);
         }
 
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)

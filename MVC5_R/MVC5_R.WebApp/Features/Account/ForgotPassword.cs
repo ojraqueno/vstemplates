@@ -5,6 +5,8 @@ using MVC5_R.Infrastructure.Identity;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using MVC5_R.Infrastructure.Email;
+using MVC5_R.Models;
 
 namespace MVC5_R.WebApp.Features.Account
 {
@@ -45,15 +47,26 @@ namespace MVC5_R.WebApp.Features.Account
                 }
                 else
                 {
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    var urlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
-                    string code = await _userManager.GeneratePasswordResetTokenAsync(user.Id);
-                    var callbackUrl = urlHelper.Action(nameof(AccountController.ResetPassword), "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Current.Request.Url.Scheme);
+                    var forgotPasswordEmail = await GetForgotPasswordEmail(user);
 
                     // No await means fire and forget
-                    _userManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>. If you did not request for a password reset, no action is required.");
+                    _userManager.SendEmailAsync(user.Id, forgotPasswordEmail);
                 }
+            }
+
+            private async Task<EmailMessage> GetForgotPasswordEmail(ApplicationUser user)
+            {
+                // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                // Send an email with this link
+                var urlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
+                string code = await _userManager.GeneratePasswordResetTokenAsync(user.Id);
+                var callbackUrl = urlHelper.Action(nameof(AccountController.ResetPassword), "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Current.Request.Url.Scheme);
+
+                return new EmailMessage
+                {
+                    Body = "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>. If you did not request for a password reset, no action is required.",
+                    Subject = "Reset Password"
+                };
             }
         }
     }
