@@ -12,7 +12,7 @@ Changes:
 ## MVC5_R
 A heavily opinionated modification of the default MVC5 Web Application template from Visual Studio 2017.
 
-In addition to the built-in libraries, this template also uses:
+This template uses:
 * [MediatR] - for supporting a vertical slices architecture
 * [FluentValidation] - to declutter MediatR classes and enable custom validation
 * [SimpleInjector] - for dependency injection
