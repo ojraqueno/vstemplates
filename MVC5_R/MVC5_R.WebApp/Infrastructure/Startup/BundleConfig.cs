@@ -13,7 +13,7 @@ namespace MVC5_R.WebApp.Infrastructure.Startup
         private static void AddCoreBundles(BundleCollection bundles)
         {
             bundles.AddStyleBundle("~/stylebundles/core",
-                "~/wwwroot/lib/bootstrap/dist/css/bootstrap.css",
+                "~/wwwroot/lib/bootstrap/dist/css/bootstrap.min.css",
                 "~/wwwroot/lib/font-awesome/css/font-awesome.min.css",
                 "~/wwwroot/styles/shared/app.css");
 
