@@ -29,7 +29,7 @@ namespace MVC5_R.WebApp.Features.Account
 
             public Validator()
             {
-                _passwordValidator = ApplicationUserManager.CreatePasswordValidator();
+                _passwordValidator = UserManager.CreatePasswordValidator();
 
                 RuleFor(c => c.Email)
                     .NotEmpty();
@@ -50,7 +50,7 @@ namespace MVC5_R.WebApp.Features.Account
 
             private bool IsPasswordValid(string password)
             {
-                var passwordValidator = ApplicationUserManager.CreatePasswordValidator();
+                var passwordValidator = UserManager.CreatePasswordValidator();
                 return passwordValidator.ValidateAsync(password).Result.Succeeded;
             }
         }
@@ -58,10 +58,10 @@ namespace MVC5_R.WebApp.Features.Account
         public class Handler : IAsyncRequestHandler<Command>
         {
             private readonly ApplicationDbContext _db;
-            private readonly ApplicationUserManager _userManager;
-            private readonly ApplicationSignInManager _signInManager;
+            private readonly UserManager _userManager;
+            private readonly SignInManager _signInManager;
 
-            public Handler(ApplicationDbContext db, ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+            public Handler(ApplicationDbContext db, UserManager userManager, SignInManager signInManager)
             {
                 _db = db;
                 _userManager = userManager;
@@ -70,7 +70,7 @@ namespace MVC5_R.WebApp.Features.Account
 
             public async Task Handle(Command command)
             {
-                var user = new ApplicationUser { Email = command.Email, UserName = command.Email, };
+                var user = new User { Email = command.Email, UserName = command.Email, };
                 var createUserResult = await _userManager.CreateAsync(user, command.Password);
                 if (!createUserResult.Succeeded)
                 {
@@ -85,7 +85,7 @@ namespace MVC5_R.WebApp.Features.Account
                 _userManager.SendEmailAsync(user.Id, postRegistrationEmailMessage);
             }
 
-            private async Task<EmailMessage> GetPostRegistrationEmailMessage(ApplicationUser user)
+            private async Task<EmailMessage> GetPostRegistrationEmailMessage(User user)
             {
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link

@@ -16,10 +16,10 @@ namespace MVC5_R.WebApp.Controllers
     {
         private readonly IAuthenticationManager _authenticationManager;
         private readonly IMediator _mediator;
-        private readonly ApplicationSignInManager _signInManager;
-        private readonly ApplicationUserManager _userManager;
+        private readonly SignInManager _signInManager;
+        private readonly UserManager _userManager;
 
-        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IAuthenticationManager authenticationManager, IMediator mediator)
+        public ManageController(UserManager userManager, SignInManager signInManager, IAuthenticationManager authenticationManager, IMediator mediator)
         {
             _userManager = userManager;
             _signInManager = signInManager;

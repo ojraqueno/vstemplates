@@ -39,8 +39,8 @@ namespace MVC5_R.WebApp.Infrastructure.Startup
             container.Register<ApplicationDbContext, ApplicationDbContext>(Lifestyle.Scoped);
             RegisterValidators(container);
             RegisterMediatR(container);
-            container.Register<ApplicationSignInManager>(GetApplicationSignInManager, Lifestyle.Scoped);
-            container.Register<ApplicationUserManager>(GetApplicationUserManager, Lifestyle.Scoped);
+            container.Register<SignInManager>(GetSignInManager, Lifestyle.Scoped);
+            container.Register<UserManager>(GetUserManager, Lifestyle.Scoped);
             container.Register<IAuthenticationManager>(GetAuthenticationManager, Lifestyle.Scoped);
             container.Register<IMVCLogger, MVCLogger>(Lifestyle.Singleton);
 
@@ -54,14 +54,14 @@ namespace MVC5_R.WebApp.Infrastructure.Startup
             return ((IServiceProvider)Container).GetService(serviceType);
         }
 
-        private static ApplicationSignInManager GetApplicationSignInManager()
+        private static SignInManager GetSignInManager()
         {
-            return HttpContext.Current.GetOwinContext().Get<ApplicationSignInManager>();
+            return HttpContext.Current.GetOwinContext().Get<SignInManager>();
         }
 
-        private static ApplicationUserManager GetApplicationUserManager()
+        private static UserManager GetUserManager()
         {
-            return HttpContext.Current.GetOwinContext().Get<ApplicationUserManager>();
+            return HttpContext.Current.GetOwinContext().Get<UserManager>();
         }
 
         private static IAuthenticationManager GetAuthenticationManager()

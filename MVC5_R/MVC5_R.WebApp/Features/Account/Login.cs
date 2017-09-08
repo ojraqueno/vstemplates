@@ -49,9 +49,9 @@ namespace MVC5_R.WebApp.Features.Account
 
         public class CommandHandler : IAsyncRequestHandler<Command, SignInStatus>
         {
-            private readonly ApplicationSignInManager _signInManager;
+            private readonly SignInManager _signInManager;
 
-            public CommandHandler(ApplicationSignInManager signInManager)
+            public CommandHandler(SignInManager signInManager)
             {
                 _signInManager = signInManager;
             }

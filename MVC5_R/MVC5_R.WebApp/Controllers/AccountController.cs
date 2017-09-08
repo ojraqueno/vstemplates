@@ -16,10 +16,10 @@ namespace MVC5_R.WebApp.Controllers
     {
         private readonly IAuthenticationManager _authenticationManager;
         private readonly IMediator _mediator;
-        private readonly ApplicationSignInManager _signInManager;
-        private readonly ApplicationUserManager _userManager;
+        private readonly SignInManager _signInManager;
+        private readonly UserManager _userManager;
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IAuthenticationManager authenticationManager, IMediator mediator)
+        public AccountController(UserManager userManager, SignInManager signInManager, IAuthenticationManager authenticationManager, IMediator mediator)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -104,7 +104,7 @@ namespace MVC5_R.WebApp.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new User { UserName = model.Email, Email = model.Email };
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {

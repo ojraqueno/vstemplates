@@ -13,7 +13,7 @@ namespace MVC5_R.Infrastructure.Data.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201707211355485_Initial"; }
+            get { return "201709080246062_Initial"; }
         }
         
         string IMigrationMetadata.Source

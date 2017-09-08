@@ -28,12 +28,12 @@ namespace MVC5_R.WebApp.Features.Manage
         public class Validator : AbstractValidator<Command>
         {
             private readonly PasswordValidator _passwordValidator;
-            private readonly ApplicationUserManager _userManager;
+            private readonly UserManager _userManager;
 
             public Validator()
             {
-                _passwordValidator = ApplicationUserManager.CreatePasswordValidator();
-                _userManager = DependencyConfig.Instance.Container.GetInstance<ApplicationUserManager>();
+                _passwordValidator = UserManager.CreatePasswordValidator();
+                _userManager = DependencyConfig.Instance.Container.GetInstance<UserManager>();
 
                 RuleFor(c => c.OldPassword)
                     .NotEmpty();
@@ -71,10 +71,10 @@ namespace MVC5_R.WebApp.Features.Manage
 
         public class Handler : IAsyncRequestHandler<Command>
         {
-            private readonly ApplicationSignInManager _signInManager;
-            private readonly ApplicationUserManager _userManager;
+            private readonly SignInManager _signInManager;
+            private readonly UserManager _userManager;
 
-            public Handler(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+            public Handler(UserManager userManager, SignInManager signInManager)
             {
                 _userManager = userManager;
                 _signInManager = signInManager;

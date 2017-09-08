@@ -31,11 +31,11 @@ namespace MVC5_R.WebApp.Features.Account
 
         public class Handler : IAsyncRequestHandler<Command>
         {
-            private readonly ApplicationUserManager _userManager;
+            private readonly UserManager _userManager;
 
-            public Handler(ApplicationUserManager applicationUserManager)
+            public Handler(UserManager userManager)
             {
-                _userManager = applicationUserManager;
+                _userManager = userManager;
             }
 
             public async Task Handle(Command model)
@@ -54,7 +54,7 @@ namespace MVC5_R.WebApp.Features.Account
                 }
             }
 
-            private async Task<EmailMessage> GetForgotPasswordEmail(ApplicationUser user)
+            private async Task<EmailMessage> GetForgotPasswordEmail(User user)
             {
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link

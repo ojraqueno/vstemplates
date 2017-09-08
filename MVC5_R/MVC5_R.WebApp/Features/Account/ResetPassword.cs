@@ -46,12 +46,12 @@ namespace MVC5_R.WebApp.Features.Account
         public class CommandValidator : AbstractValidator<Command>
         {
             private readonly PasswordValidator _passwordValidator;
-            private readonly ApplicationUserManager _userManager;
+            private readonly UserManager _userManager;
 
             public CommandValidator()
             {
-                _passwordValidator = ApplicationUserManager.CreatePasswordValidator();
-                _userManager = DependencyConfig.Instance.Container.GetInstance<ApplicationUserManager>();
+                _passwordValidator = UserManager.CreatePasswordValidator();
+                _userManager = DependencyConfig.Instance.Container.GetInstance<UserManager>();
 
                 RuleFor(c => c.NewPassword)
                     .NotEmpty();
@@ -76,9 +76,9 @@ namespace MVC5_R.WebApp.Features.Account
 
         public class CommandHandler : IAsyncRequestHandler<Command>
         {
-            private readonly ApplicationUserManager _userManager;
+            private readonly UserManager _userManager;
 
-            public CommandHandler(ApplicationUserManager userManager)
+            public CommandHandler(UserManager userManager)
             {
                 _userManager = userManager;
             }

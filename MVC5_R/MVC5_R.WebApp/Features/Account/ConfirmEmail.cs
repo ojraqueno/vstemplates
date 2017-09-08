@@ -28,9 +28,9 @@ namespace MVC5_R.WebApp.Features.Account
 
         public class Handler : IAsyncRequestHandler<Command>
         {
-            private readonly ApplicationUserManager _userManager;
+            private readonly UserManager _userManager;
 
-            public Handler(ApplicationUserManager userManager)
+            public Handler(UserManager userManager)
             {
                 _userManager = userManager;
             }
