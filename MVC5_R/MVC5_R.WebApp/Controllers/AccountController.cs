@@ -1,11 +1,10 @@
 ﻿using MediatR;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using MVC5_R.WebApp.Features.Account;
 using MVC5_R.Infrastructure.Identity;
-using MVC5_R.WebApp.Infrastructure.Mvc;
 using MVC5_R.Models;
-using System.Linq;
+using MVC5_R.WebApp.Features.Account;
+using MVC5_R.WebApp.Infrastructure.Mvc;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -260,75 +259,53 @@ namespace MVC5_R.WebApp.Controllers
             return View();
         }
 
-        //
-        // GET: /Account/SendCode
         [AllowAnonymous]
-        public async Task<ActionResult> SendCode(string returnUrl, bool rememberMe)
+        public async Task<ActionResult> SendCode(SendCode.Query query)
         {
-            var userId = await _signInManager.GetVerifiedUserIdAsync();
-            if (userId == null)
-            {
-                return View("Error");
-            }
-            var userFactors = await _userManager.GetValidTwoFactorProvidersAsync(userId);
-            var factorOptions = userFactors.Select(purpose => new SelectListItem { Text = purpose, Value = purpose }).ToList();
-            return View(new SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe });
+            var command = await _mediator.Send(query);
+
+            return View(command);
         }
 
-        //
-        // POST: /Account/SendCode
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> SendCode(SendCodeViewModel model)
+        public async Task<ActionResult> SendCode(SendCode.Command command)
         {
             if (!ModelState.IsValid)
             {
                 return View();
             }
 
-            // Generate the token and send it
-            if (!await _signInManager.SendTwoFactorCodeAsync(model.SelectedProvider))
-            {
-                return View("Error");
-            }
-            return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
+            var query = await _mediator.Send(command);
+
+            return RedirectToAction("VerifyCode", query);
         }
 
-        //
-        // GET: /Account/VerifyCode
         [AllowAnonymous]
-        public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
+        public async Task<ActionResult> VerifyCode(VerifyCode.Query query)
         {
-            // Require that the user has already logged in via username/password or external login
-            if (!await _signInManager.HasBeenVerifiedAsync())
-            {
-                return View("Error");
-            }
-            return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
+            var command = await _mediator.Send(query);
+
+            return View(command);
         }
 
-        //
-        // POST: /Account/VerifyCode
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> VerifyCode(VerifyCodeViewModel model)
+        public async Task<ActionResult> VerifyCode(VerifyCode.Command command)
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View(command);
             }
 
-            // The following code protects for brute force attacks against the two factor codes.
-            // If a user enters incorrect codes for a specified amount of time then the user account
-            // will be locked out for a specified amount of time.
-            // You can configure the account lockout settings in IdentityConfig
-            var result = await _signInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
-            switch (result)
+            var signInStatus = await _mediator.Send(command);
+
+            switch (signInStatus)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(model.ReturnUrl);
+                    return RedirectToLocal(command.ReturnUrl);
 
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -336,7 +313,7 @@ namespace MVC5_R.WebApp.Controllers
                 case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Invalid code.");
-                    return View(model);
+                    return View(command);
             }
         }
     }

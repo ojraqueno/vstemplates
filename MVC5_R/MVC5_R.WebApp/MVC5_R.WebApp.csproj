@@ -184,6 +184,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Features\Account\SendCode.cs" />
+    <Compile Include="Features\Account\VerifyCode.cs" />
     <Compile Include="Infrastructure\Authorization\AuthorizePermissionAttribute.cs" />
     <Compile Include="Infrastructure\Startup\BundleConfig.cs" />
     <Compile Include="Infrastructure\Startup\DependencyConfig.cs" />
@@ -219,8 +221,6 @@
     <Compile Include="Startup.cs" />
     <Compile Include="Features\Account\ExternalLoginConfirmationViewModel.cs" />
     <Compile Include="Features\Account\ExternalLoginListViewModel.cs" />
-    <Compile Include="Features\Account\SendCodeViewModel.cs" />
-    <Compile Include="Features\Account\VerifyCodeViewModel.cs" />
     <Compile Include="Features\Manage\AddPhoneNumberViewModel.cs" />
     <Compile Include="Features\Manage\ConfigureTwoFactorViewModel.cs" />
     <Compile Include="Features\Manage\FactorViewModel.cs" />
@@ -734,9 +734,7 @@
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Roles\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
