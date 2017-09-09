@@ -10,7 +10,6 @@ using System.Web.Mvc;
 
 namespace MVC5_R.WebApp.Controllers
 {
-    [Authorize]
     public class AccountController : AppController
     {
         private readonly IAuthenticationManager _authenticationManager;
