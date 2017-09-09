@@ -45,7 +45,7 @@ namespace MVC5_R.WebApp.Features.Account
 
                 RuleFor(c => c.Password)
                     .Must(c => _passwordValidator.ValidateAsync(c).Result.Succeeded)
-                    .WithMessage(c => String.Join(",", _passwordValidator.ValidateAsync(c.Password).Result.Errors));
+                    .WithMessage(c => _passwordValidator.ValidateAsync(c.Password).Result.Errors.Join(","));
             }
 
             private bool IsPasswordValid(string password)
@@ -74,7 +74,7 @@ namespace MVC5_R.WebApp.Features.Account
                 var createUserResult = await _userManager.CreateAsync(user, command.Password);
                 if (!createUserResult.Succeeded)
                 {
-                    throw new Exception($"Unable to create user. Errors: {String.Join(",", createUserResult.Errors)}");
+                    throw new Exception($"Unable to create user. Errors: {createUserResult.Errors.Join(",")}");
                 }
 
                 await _signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);

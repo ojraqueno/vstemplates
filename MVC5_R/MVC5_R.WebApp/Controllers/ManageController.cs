@@ -219,37 +219,24 @@ namespace MVC5_R.WebApp.Controllers
             }
             return RedirectToAction("Index", new { Message = ManageMessageId.RemovePhoneSuccess });
         }
-
-        //
-        // GET: /Manage/SetPassword
+        
         public ActionResult SetPassword()
         {
             return View();
         }
-
-        //
-        // POST: /Manage/SetPassword
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> SetPassword(SetPasswordViewModel model)
+        public async Task<ActionResult> SetPassword(SetPassword.Command command)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var result = await _userManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
-                if (result.Succeeded)
-                {
-                    var user = await _userManager.FindByIdAsync(User.Identity.GetUserId());
-                    if (user != null)
-                    {
-                        await _signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                    }
-                    return RedirectToAction("Index", new { Message = ManageMessageId.SetPasswordSuccess });
-                }
-                ModelState.AddErrors(result);
+                return View(command);
             }
 
-            // If we got this far, something failed, redisplay form
-            return View(model);
+            await _mediator.Send(command);
+
+            return RedirectToAction("Index", new { Message = ManageMessageId.SetPasswordSuccess });
         }
 
         //

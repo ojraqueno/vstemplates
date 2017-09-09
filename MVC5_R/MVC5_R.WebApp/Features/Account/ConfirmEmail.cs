@@ -40,7 +40,7 @@ namespace MVC5_R.WebApp.Features.Account
                 var confirmEmailResult = await _userManager.ConfirmEmailAsync(command.UserId, command.Code);
                 if (!confirmEmailResult.Succeeded)
                 {
-                    throw new Exception($"Unable to confirm email. Errors: {String.Join(",", confirmEmailResult.Errors)}");
+                    throw new Exception($"Unable to confirm email. Errors: {confirmEmailResult.Errors.Join(",")}");
                 }
             }
         }

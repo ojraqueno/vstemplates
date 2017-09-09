@@ -186,6 +186,7 @@
   <ItemGroup>
     <Compile Include="Features\Account\SendCode.cs" />
     <Compile Include="Features\Account\VerifyCode.cs" />
+    <Compile Include="Features\Manage\SettPassword.cs" />
     <Compile Include="Infrastructure\Authorization\AuthorizePermissionAttribute.cs" />
     <Compile Include="Infrastructure\Startup\BundleConfig.cs" />
     <Compile Include="Infrastructure\Startup\DependencyConfig.cs" />

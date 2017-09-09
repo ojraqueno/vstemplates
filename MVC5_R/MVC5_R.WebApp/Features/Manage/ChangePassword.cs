@@ -47,7 +47,7 @@ namespace MVC5_R.WebApp.Features.Manage
 
                 RuleFor(c => c.NewPassword)
                     .Must(c => _passwordValidator.ValidateAsync(c).Result.Succeeded)
-                    .WithMessage(c => String.Join(",", _passwordValidator.ValidateAsync(c.NewPassword).Result.Errors));
+                    .WithMessage(c => _passwordValidator.ValidateAsync(c.NewPassword).Result.Errors.Join(","));
 
                 RuleFor(c => c.ConfirmPassword)
                     .NotEmpty();
@@ -86,7 +86,7 @@ namespace MVC5_R.WebApp.Features.Manage
                 var changePasswordResult = await _userManager.ChangePasswordAsync(currentUser.Id, command.OldPassword, command.NewPassword);
                 if (!changePasswordResult.Succeeded)
                 {
-                    throw new Exception($"Unable to change password. Errors: {String.Join(",", changePasswordResult.Errors)}");
+                    throw new Exception($"Unable to change password. Errors: {changePasswordResult.Errors.Join(",")}");
                 }
 
                 var user = await _userManager.FindByIdAsync(currentUser.Id);

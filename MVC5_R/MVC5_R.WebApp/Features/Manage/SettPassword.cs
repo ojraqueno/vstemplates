@@ -4,51 +4,32 @@ using Microsoft.AspNet.Identity;
 using MVC5_R.Infrastructure.Identity;
 using MVC5_R.WebApp.Infrastructure.Startup;
 using System;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 
-namespace MVC5_R.WebApp.Features.Account
+namespace MVC5_R.WebApp.Features.Manage
 {
-    public class ResetPassword
+    public class SetPassword
     {
-        public class Query : IRequest<Command>
-        {
-            public string Code { get; set; }
-        }
-
-        public class QueryValidator : AbstractValidator<Query>
-        {
-            public QueryValidator()
-            {
-                RuleFor(c => c.Code)
-                    .NotEmpty();
-            }
-        }
-
-        public class QueryHandler : IRequestHandler<Query, Command>
-        {
-            public Command Handle(Query query)
-            {
-                return new Command
-                {
-                    Code = query.Code
-                };
-            }
-        }
-
         public class Command : IRequest
         {
-            public string Code { get; set; }
+            [DataType(DataType.Password)]
+            [Display(Name = "Confirm new password")]
             public string ConfirmPassword { get; set; }
-            public string Email { get; set; }
+
+            [DataType(DataType.Password)]
+            [Display(Name = "New password")]
             public string NewPassword { get; set; }
         }
 
-        public class CommandValidator : AbstractValidator<Command>
+        public class Validator : AbstractValidator<Command>
         {
             private readonly PasswordValidator _passwordValidator;
             private readonly UserManager _userManager;
 
-            public CommandValidator()
+            public Validator()
             {
                 _passwordValidator = UserManager.CreatePasswordValidator();
                 _userManager = DependencyConfig.Instance.Container.GetInstance<UserManager>();
@@ -74,29 +55,29 @@ namespace MVC5_R.WebApp.Features.Account
             }
         }
 
-        public class CommandHandler : IAsyncRequestHandler<Command>
+        public class Handler : IAsyncRequestHandler<Command>
         {
             private readonly UserManager _userManager;
+            private readonly SignInManager _signInManager;
 
-            public CommandHandler(UserManager userManager)
+            public Handler(UserManager userManager, SignInManager signInManager)
             {
                 _userManager = userManager;
+                _signInManager = signInManager;
             }
 
             public async Task Handle(Command command)
             {
-                var user = await _userManager.FindByNameAsync(command.Email);
-                if (user == null)
+                var addPasswordResult = await _userManager.AddPasswordAsync(HttpContext.Current.User.Identity.GetUserId(), command.NewPassword);
+                if (!addPasswordResult.Succeeded)
                 {
-                    // Do nothing: Don't reveal that the user does not exist
+                    throw new Exception($"Unable to add password. Errors: {addPasswordResult.Errors.Join(",")}");
                 }
-                else
+
+                var user = await _userManager.FindByIdAsync(HttpContext.Current.User.Identity.GetUserId());
+                if (user != null)
                 {
-                    var result = await _userManager.ResetPasswordAsync(user.Id, command.Code, command.NewPassword);
-                    if (!result.Succeeded)
-                    {
-                        throw new Exception("Unable to reset password. The link may have expired.");
-                    }
+                    await _signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
             }
         }
