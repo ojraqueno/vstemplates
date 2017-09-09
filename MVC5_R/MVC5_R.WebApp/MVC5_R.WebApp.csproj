@@ -227,7 +227,6 @@
     <Compile Include="Features\Manage\FactorViewModel.cs" />
     <Compile Include="Features\Manage\IndexViewModel.cs" />
     <Compile Include="Features\Manage\ManageLoginsViewModel.cs" />
-    <Compile Include="Features\Manage\SetPasswordViewModel.cs" />
     <Compile Include="Features\Manage\VerifyPhoneNumberViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
