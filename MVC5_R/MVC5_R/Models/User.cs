@@ -8,7 +8,7 @@ namespace MVC5_R.Models
 {
     public class User : IdentityUser
     {
-        public ICollection<CustomRole> CustomRoles { get; set; }
+        public ICollection<CustomRole> CustomRoles { get; set; } = new List<CustomRole>();
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
         {
