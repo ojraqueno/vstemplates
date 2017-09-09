@@ -25,36 +25,24 @@ namespace MVC5_R.WebApp.Controllers
             _authenticationManager = authenticationManager;
             _mediator = mediator;
         }
-
-        //
-        // GET: /Manage/AddPhoneNumber
+        
         public ActionResult AddPhoneNumber()
         {
             return View();
         }
-
-        //
-        // POST: /Manage/AddPhoneNumber
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> AddPhoneNumber(AddPhoneNumberViewModel model)
+        public async Task<ActionResult> AddPhoneNumber(AddPhoneNumber.Command command)
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View(command);
             }
-            // Generate the token and send it
-            var code = await _userManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), model.Number);
-            if (_userManager.SmsService != null)
-            {
-                var message = new IdentityMessage
-                {
-                    Destination = model.Number,
-                    Body = "Your security code is: " + code
-                };
-                await _userManager.SmsService.SendAsync(message);
-            }
-            return RedirectToAction("VerifyPhoneNumber", new { PhoneNumber = model.Number });
+
+            await _mediator.Send(command);
+
+            return RedirectToAction("VerifyPhoneNumber", new { PhoneNumber = command.Number });
         }
 
         public ActionResult ChangePassword()

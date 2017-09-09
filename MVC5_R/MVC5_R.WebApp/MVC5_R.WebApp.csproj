@@ -186,6 +186,7 @@
   <ItemGroup>
     <Compile Include="Features\Account\SendCode.cs" />
     <Compile Include="Features\Account\VerifyCode.cs" />
+    <Compile Include="Features\Manage\AddPhoneNumber.cs" />
     <Compile Include="Features\Manage\SettPassword.cs" />
     <Compile Include="Infrastructure\Authorization\AuthorizePermissionAttribute.cs" />
     <Compile Include="Infrastructure\Startup\BundleConfig.cs" />
@@ -222,7 +223,6 @@
     <Compile Include="Startup.cs" />
     <Compile Include="Features\Account\ExternalLoginConfirmationViewModel.cs" />
     <Compile Include="Features\Account\ExternalLoginListViewModel.cs" />
-    <Compile Include="Features\Manage\AddPhoneNumberViewModel.cs" />
     <Compile Include="Features\Manage\ConfigureTwoFactorViewModel.cs" />
     <Compile Include="Features\Manage\FactorViewModel.cs" />
     <Compile Include="Features\Manage\IndexViewModel.cs" />
