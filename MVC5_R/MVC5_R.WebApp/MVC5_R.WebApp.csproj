@@ -553,7 +553,6 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <Content Include=".bowerrc" />
-    <None Include="Project_Readme.html" />
     <Content Include="wwwroot\lib\angular\.bower.json" />
     <Content Include="wwwroot\lib\angular\angular.min.js.gzip" />
     <Content Include="wwwroot\lib\angular\angular.min.js.map" />
