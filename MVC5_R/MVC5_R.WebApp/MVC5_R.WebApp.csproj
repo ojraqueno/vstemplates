@@ -231,7 +231,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="wwwroot\styles\shared\app.css" />
-    <Content Include="favicon.ico" />
+    <Content Include="wwwroot\favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="bower.json" />
     <Content Include="wwwroot\lib\angular-bootstrap\index.js" />
