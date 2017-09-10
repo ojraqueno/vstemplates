@@ -1,14 +1,10 @@
-﻿using MediatR;
+﻿using FluentValidation;
+using MediatR;
 using Microsoft.AspNet.Identity.Owin;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Threading.Tasks;
 using MVC5_R.Infrastructure.Identity;
-using FluentValidation;
-using MVC5_R.WebApp.Infrastructure.Startup;
+using System;
 using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 
 namespace MVC5_R.WebApp.Features.Account
 {
@@ -49,7 +45,7 @@ namespace MVC5_R.WebApp.Features.Account
 
         public class Command : IRequest<SignInStatus>
         {
-            public string Code { get; set; }            
+            public string Code { get; set; }
             public string Provider { get; set; }
             [Display(Name = "Remember this browser?")]
             public bool RememberBrowser { get; set; }
