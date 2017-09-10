@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using CoreMVC.WebApp.Features.Shared;
 using Microsoft.AspNetCore.Mvc;
-using CoreMVC.WebApp.Models;
+using System.Diagnostics;
 
 namespace CoreMVC.WebApp.Controllers
 {
@@ -31,7 +27,7 @@ namespace CoreMVC.WebApp.Controllers
 
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(new Error { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

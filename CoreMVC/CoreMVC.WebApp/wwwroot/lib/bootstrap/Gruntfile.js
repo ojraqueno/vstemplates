@@ -12,7 +12,7 @@ module.exports = function (grunt) {
   grunt.util.linefeed = '\n';
 
   RegExp.quote = function (string) {
-    return string.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
+    return String.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
   };
 
   var fs = require('fs');

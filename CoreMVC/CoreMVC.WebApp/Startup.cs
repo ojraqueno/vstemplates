@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using CoreMVC.Infrastructure.Data;
+using CoreMVC.Infrastructure.Email;
+using CoreMVC.Models;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using CoreMVC.WebApp.Data;
-using CoreMVC.WebApp.Models;
-using CoreMVC.WebApp.Services;
 
 namespace CoreMVC.WebApp
 {
@@ -34,7 +30,7 @@ namespace CoreMVC.WebApp
                 .AddDefaultTokenProviders();
 
             // Add application services.
-            services.AddTransient<IEmailSender, EmailSender>();
+            services.AddTransient<IEmailSender, NoopEmailSender>();
 
             services.AddMvc();
         }

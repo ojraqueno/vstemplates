@@ -10,9 +10,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using CoreMVC.WebApp.Models;
-using CoreMVC.WebApp.Models.ManageViewModels;
-using CoreMVC.WebApp.Services;
+using CoreMVC.WebApp.Features;
+using CoreMVC.WebApp.Features.Manage;
+using CoreMVC.Models;
+using CoreMVC.Infrastructure.Email;
 
 namespace CoreMVC.WebApp.Controllers
 {
@@ -54,7 +55,7 @@ namespace CoreMVC.WebApp.Controllers
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            var model = new IndexViewModel
+            var model = new Index
             {
                 Username = user.UserName,
                 Email = user.Email,
@@ -68,7 +69,7 @@ namespace CoreMVC.WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Index(IndexViewModel model)
+        public async Task<IActionResult> Index(Index model)
         {
             if (!ModelState.IsValid)
             {
@@ -107,7 +108,7 @@ namespace CoreMVC.WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SendVerificationEmail(IndexViewModel model)
+        public async Task<IActionResult> SendVerificationEmail(Index model)
         {
             if (!ModelState.IsValid)
             {
@@ -144,13 +145,13 @@ namespace CoreMVC.WebApp.Controllers
                 return RedirectToAction(nameof(SetPassword));
             }
 
-            var model = new ChangePasswordViewModel { StatusMessage = StatusMessage };
+            var model = new ChangePassword { StatusMessage = StatusMessage };
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+        public async Task<IActionResult> ChangePassword(ChangePassword model)
         {
             if (!ModelState.IsValid)
             {
@@ -193,13 +194,13 @@ namespace CoreMVC.WebApp.Controllers
                 return RedirectToAction(nameof(ChangePassword));
             }
 
-            var model = new SetPasswordViewModel { StatusMessage = StatusMessage };
+            var model = new SetPassword { StatusMessage = StatusMessage };
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SetPassword(SetPasswordViewModel model)
+        public async Task<IActionResult> SetPassword(SetPassword model)
         {
             if (!ModelState.IsValid)
             {
@@ -234,7 +235,7 @@ namespace CoreMVC.WebApp.Controllers
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            var model = new ExternalLoginsViewModel { CurrentLogins = await _userManager.GetLoginsAsync(user) };
+            var model = new ExternalLogins { CurrentLogins = await _userManager.GetLoginsAsync(user) };
             model.OtherLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync())
                 .Where(auth => model.CurrentLogins.All(ul => auth.Name != ul.LoginProvider))
                 .ToList();
@@ -287,7 +288,7 @@ namespace CoreMVC.WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> RemoveLogin(RemoveLoginViewModel model)
+        public async Task<IActionResult> RemoveLogin(RemoveLogin model)
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
@@ -315,7 +316,7 @@ namespace CoreMVC.WebApp.Controllers
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            var model = new TwoFactorAuthenticationViewModel
+            var model = new TwoFactorAuthentication
             {
                 HasAuthenticator = await _userManager.GetAuthenticatorKeyAsync(user) != null,
                 Is2faEnabled = user.TwoFactorEnabled,
@@ -372,13 +373,13 @@ namespace CoreMVC.WebApp.Controllers
             }
 
             var unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
-            if (string.IsNullOrEmpty(unformattedKey))
+            if (String.IsNullOrEmpty(unformattedKey))
             {
                 await _userManager.ResetAuthenticatorKeyAsync(user);
                 unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
             }
 
-            var model = new EnableAuthenticatorViewModel
+            var model = new EnableAuthenticator
             {
                 SharedKey = FormatKey(unformattedKey),
                 AuthenticatorUri = GenerateQrCodeUri(user.Email, unformattedKey)
@@ -389,7 +390,7 @@ namespace CoreMVC.WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EnableAuthenticator(EnableAuthenticatorViewModel model)
+        public async Task<IActionResult> EnableAuthenticator(EnableAuthenticator model)
         {
             if (!ModelState.IsValid)
             {
@@ -403,7 +404,7 @@ namespace CoreMVC.WebApp.Controllers
             }
 
             // Strip spaces and hypens
-            var verificationCode = model.Code.Replace(" ", string.Empty).Replace("-", string.Empty);
+            var verificationCode = model.Code.Replace(" ", String.Empty).Replace("-", String.Empty);
 
             var is2faTokenValid = await _userManager.VerifyTwoFactorTokenAsync(
                 user, _userManager.Options.Tokens.AuthenticatorTokenProvider, verificationCode);
@@ -457,7 +458,7 @@ namespace CoreMVC.WebApp.Controllers
             }
 
             var recoveryCodes = await _userManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 10);
-            var model = new GenerateRecoveryCodesViewModel { RecoveryCodes = recoveryCodes.ToArray() };
+            var model = new GenerateRecoveryCodes { RecoveryCodes = recoveryCodes.ToArray() };
 
             _logger.LogInformation("User with ID {UserId} has generated new 2FA recovery codes.", user.Id);
 
@@ -470,7 +471,7 @@ namespace CoreMVC.WebApp.Controllers
         {
             foreach (var error in result.Errors)
             {
-                ModelState.AddModelError(string.Empty, error.Description);
+                ModelState.AddModelError(String.Empty, error.Description);
             }
         }
 
@@ -493,7 +494,7 @@ namespace CoreMVC.WebApp.Controllers
 
         private string GenerateQrCodeUri(string email, string unformattedKey)
         {
-            return string.Format(
+            return String.Format(
                 AuthenicatorUriFormat,
                 _urlEncoder.Encode("CoreMVC.WebApp"),
                 _urlEncoder.Encode(email),
