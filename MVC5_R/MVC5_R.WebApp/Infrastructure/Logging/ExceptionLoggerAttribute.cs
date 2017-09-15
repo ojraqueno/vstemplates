@@ -1,4 +1,4 @@
-﻿using MVC5_R.WebApp.Infrastructure.Startup;
+﻿using MVC5_R.WebApp.Infrastructure.Dependency;
 using System.Web.Mvc;
 
 namespace MVC5_R.WebApp.Infrastructure.Logging

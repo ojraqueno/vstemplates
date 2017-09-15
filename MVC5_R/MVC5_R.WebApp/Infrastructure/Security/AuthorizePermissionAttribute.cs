@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNet.Identity;
 using MVC5_R.Infrastructure.Data;
 using MVC5_R.Models;
-using MVC5_R.WebApp.Infrastructure.Startup;
+using MVC5_R.WebApp.Infrastructure.Dependency;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace MVC5_R.WebApp.Infrastructure.Authorization
+namespace MVC5_R.WebApp.Infrastructure.Security
 {
     public class AuthorizePermissionAttribute : AuthorizeAttribute
     {

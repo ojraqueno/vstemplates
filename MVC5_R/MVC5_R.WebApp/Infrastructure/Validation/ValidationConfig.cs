@@ -1,7 +1,7 @@
 ﻿using FluentValidation.Mvc;
-using MVC5_R.WebApp.Infrastructure.Validation;
+using MVC5_R.WebApp.Infrastructure.Dependency;
 
-namespace MVC5_R.WebApp.Infrastructure.Startup
+namespace MVC5_R.WebApp.Infrastructure.Validation
 {
     public class ValidationConfig
     {

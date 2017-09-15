@@ -2,7 +2,7 @@
 using MediatR;
 using Microsoft.AspNet.Identity;
 using MVC5_R.Infrastructure.Identity;
-using MVC5_R.WebApp.Infrastructure.Startup;
+using MVC5_R.WebApp.Infrastructure.Dependency;
 using System;
 using System.Threading.Tasks;
 

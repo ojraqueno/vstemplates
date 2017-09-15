@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
-namespace MVC5_R.WebApp.Infrastructure.Startup
+namespace MVC5_R.WebApp.Infrastructure.Dependency
 {
     public class DependencyConfig : IServiceProvider
     {
