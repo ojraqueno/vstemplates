@@ -1,4 +1,5 @@
 ﻿using MVC5_R.WebApp.Infrastructure.Bundling;
+using MVC5_R.WebApp.Infrastructure.Mapping;
 using MVC5_R.WebApp.Infrastructure.Mvc;
 using MVC5_R.WebApp.Infrastructure.Validation;
 using System.Web;
@@ -13,6 +14,7 @@ namespace MVC5_R.WebApp
         protected void Application_Start()
         {
             ValidationConfig.Configure();
+            MappingConfig.Configure();
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
