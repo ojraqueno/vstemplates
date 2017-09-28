@@ -229,6 +229,7 @@
     <Compile Include="Features\Account\RemoveLoginBindingModel.cs" />
     <Compile Include="Features\Account\UserInfoViewModel.cs" />
     <Compile Include="Infrastructure\Dependency\DependencyConfig.cs" />
+    <Compile Include="Infrastructure\Mapping\MappingConfig.cs" />
     <Compile Include="Infrastructure\WebAPI\FilterConfig.cs" />
     <Compile Include="Infrastructure\WebAPI\RouteConfig.cs" />
     <Compile Include="Infrastructure\Security\Startup.Auth.cs" />
