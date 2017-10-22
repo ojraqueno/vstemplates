@@ -13,6 +13,7 @@ namespace MVC5_R.Infrastructure.Data.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         AddedOn = c.DateTime(nullable: false),
+                        DeletedOn = c.DateTime(),
                         ModifiedOn = c.DateTime(),
                         Name = c.String(),
                         PermissionsString = c.String(),
@@ -24,6 +25,9 @@ namespace MVC5_R.Infrastructure.Data.Migrations
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
+                        AddedOn = c.DateTime(nullable: false),
+                        DeletedOn = c.DateTime(),
+                        ModifiedOn = c.DateTime(),
                         Email = c.String(maxLength: 256),
                         EmailConfirmed = c.Boolean(nullable: false),
                         PasswordHash = c.String(),

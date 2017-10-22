@@ -13,12 +13,13 @@ namespace MVC5_R.WebApp.Infrastructure.Security
     {
         private readonly ApplicationDbContext _db;
 
-        public AuthorizePermissionAttribute()
+        public AuthorizePermissionAttribute(Permission permission)
         {
             _db = DependencyConfig.Instance.Container.GetInstance<ApplicationDbContext>();
+            Permission = permission;
         }
 
-        public Permission Permission { get; set; }
+        public Permission Permission { get; private set; }
 
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
@@ -33,9 +34,7 @@ namespace MVC5_R.WebApp.Infrastructure.Security
 
             return currentUser
                 .CustomRoles
-                .SelectMany(r => r.Permissions)
-                .Distinct()
-                .Any(p => p == Permission);
+                .Any(cr => cr.HasPermission(Permission));
         }
     }
 }
