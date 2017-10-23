@@ -5,6 +5,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using MVC5_R.Infrastructure.Data;
 using MVC5_R.Infrastructure.Identity;
+using MVC5_R.Infrastructure.Storage;
 using MVC5_R.WebApp.Infrastructure.Logging;
 using SimpleInjector;
 using SimpleInjector.Integration.Web;
@@ -43,6 +44,7 @@ namespace MVC5_R.WebApp.Infrastructure.Dependency
             container.Register<UserManager>(GetUserManager, Lifestyle.Scoped);
             container.Register<IAuthenticationManager>(GetAuthenticationManager, Lifestyle.Scoped);
             container.Register<IMVCLogger, MVCLogger>(Lifestyle.Singleton);
+            container.Register<IStorageService, AzureStorageService>(Lifestyle.Singleton);
 
             DependencyResolver.SetResolver(new SimpleInjectorDependencyResolver(container));
 

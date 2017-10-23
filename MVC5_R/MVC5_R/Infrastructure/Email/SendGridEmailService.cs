@@ -13,7 +13,7 @@ namespace MVC5_R.Infrastructure.Email
 
         public SendGridEmailService()
         {
-            var apiKey = AppSettings.String("SENDGRID_APIKEY");
+            var apiKey = AppSettings.String("SendGridApiKey");
             _client = new SendGridClient(apiKey);
         }
 
