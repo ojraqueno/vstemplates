@@ -214,6 +214,7 @@
   <ItemGroup>
     <Compile Include="Features\Account\SendCode.cs" />
     <Compile Include="Features\Account\VerifyCode.cs" />
+    <Compile Include="Features\Errors\_Controller.cs" />
     <Compile Include="Features\Manage\AddPhoneNumber.cs" />
     <Compile Include="Features\Manage\SettPassword.cs" />
     <Compile Include="Infrastructure\Mapping\MappingConfig.cs" />
@@ -763,6 +764,12 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Content Include="Views\Errors\ServerError.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Errors\NotFound.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
