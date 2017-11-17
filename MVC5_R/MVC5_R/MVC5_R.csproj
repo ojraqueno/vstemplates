@@ -113,14 +113,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Infrastructure\.NET\DateTimeExtensions.cs" />
     <Compile Include="Infrastructure\.NET\IEnumerableExtensions.cs" />
     <Compile Include="Infrastructure\.NET\StringExtensions.cs" />
     <Compile Include="Infrastructure\Configuration\AppSettings.cs" />
     <Compile Include="Infrastructure\Data\ApplicationDbContext.cs" />
     <Compile Include="Infrastructure\Data\EntityConfiguration\CustomRoleConfiguration.cs" />
-    <Compile Include="Infrastructure\Data\Migrations\201710220247237_Initial.cs" />
-    <Compile Include="Infrastructure\Data\Migrations\201710220247237_Initial.Designer.cs">
-      <DependentUpon>201710220247237_Initial.cs</DependentUpon>
+    <Compile Include="Infrastructure\Data\Migrations\201711170224405_Initial.cs" />
+    <Compile Include="Infrastructure\Data\Migrations\201711170224405_Initial.Designer.cs">
+      <DependentUpon>201711170224405_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\Data\Migrations\Configuration.cs" />
     <Compile Include="Infrastructure\Email\EmailAddresses.cs" />
@@ -129,6 +130,8 @@
     <Compile Include="Infrastructure\Email\SendGridEmailService.cs" />
     <Compile Include="Infrastructure\Identity\SignInManager.cs" />
     <Compile Include="Infrastructure\Identity\UserManager.cs" />
+    <Compile Include="Infrastructure\Logging\Logger.cs" />
+    <Compile Include="Infrastructure\Logging\LogLevel.cs" />
     <Compile Include="Infrastructure\Sms\NoopSmsService.cs" />
     <Compile Include="Infrastructure\Storage\AzureStorageService.cs" />
     <Compile Include="Infrastructure\Storage\ContainerNames.cs" />
@@ -144,8 +147,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Infrastructure\Data\Migrations\201710220247237_Initial.resx">
-      <DependentUpon>201710220247237_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Infrastructure\Data\Migrations\201711170224405_Initial.resx">
+      <DependentUpon>201711170224405_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

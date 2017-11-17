@@ -88,8 +88,10 @@ namespace MVC5_R.Infrastructure.Data.Migrations
                         Id = c.Int(nullable: false, identity: true),
                         Action = c.String(),
                         Controller = c.String(),
+                        Level = c.String(),
                         LoggedOn = c.DateTime(),
                         Message = c.String(),
+                        Request = c.String(),
                         StackTrace = c.String(),
                         UserId = c.String(),
                     })

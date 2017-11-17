@@ -217,6 +217,7 @@
     <Compile Include="Features\Errors\_Controller.cs" />
     <Compile Include="Features\Manage\AddPhoneNumber.cs" />
     <Compile Include="Features\Manage\SettPassword.cs" />
+    <Compile Include="Infrastructure\Logging\LogHelper.cs" />
     <Compile Include="Infrastructure\Mapping\MappingConfig.cs" />
     <Compile Include="Infrastructure\Security\AuthorizePermissionAttribute.cs" />
     <Compile Include="Infrastructure\Bundling\BundleConfig.cs" />
