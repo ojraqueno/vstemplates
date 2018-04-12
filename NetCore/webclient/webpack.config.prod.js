@@ -6,6 +6,9 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 export default {
   resolve: {
+    alias: {
+      'vue$': 'vue/dist/vue.esm.js' // 'vue/dist/vue.common.js' for webpack 1
+    },
     extensions: ['*', '.js', '.jsx', '.json']
   },
   devtool: 'source-map',
@@ -66,7 +69,8 @@ export default {
   module: {
     rules: [
       {test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'},
-      {test: /\.css$/, loader: ExtractTextPlugin.extract('css-loader?sourceMap')}
+      {test: /\.css$/, loader: ExtractTextPlugin.extract('css-loader?sourceMap')},
+      {test: /\.sass$/, loader: ExtractTextPlugin.extract({use: ['css-loader', 'sass-loader']})}
     ]
   }
 };
