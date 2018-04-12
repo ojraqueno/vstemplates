@@ -76,7 +76,8 @@ export default {
     rules: [
       {test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'},
       {test: /\.css$/, loader: ExtractTextPlugin.extract('css-loader?sourceMap')},
-      {test: /\.sass$/, loader: ExtractTextPlugin.extract({use: ['css-loader', 'sass-loader']})}
+      {test: /\.sass$/, loader: ExtractTextPlugin.extract({use: ['css-loader', 'sass-loader']})},
+      {test: /\.vue$/, use: ['vue-loader']}
     ]
   }
 };

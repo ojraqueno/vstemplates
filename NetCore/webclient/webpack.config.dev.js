@@ -35,7 +35,8 @@ export default {
     rules: [
       {test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'},
       {test: /\.css$/, use: ['style-loader','css-loader']},
-      {test: /\.sass$/, use: ['style-loader','css-loader','sass-loader']}
+      {test: /\.sass$/, use: ['style-loader','css-loader','sass-loader']},
+      {test: /\.vue$/, use: ['vue-loader']}
     ]
   }
 }
