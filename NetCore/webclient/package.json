@@ -4,7 +4,8 @@
   "description": "JavaScript development environment Pluralsight course by Cory House",
   "scripts": {
     "prestart": "babel-node buildScripts/startMessage.js",
-    "start": "npm-run-all --parallel security-check open:src lint:watch test:watch start-mockapi",
+    "start": "npm-run-all --parallel security-check open:src lint test",
+    "start-old": "npm-run-all --parallel security-check open:src lint:watch test:watch start-mockapi",
     "open:src": "babel-node buildScripts/srcServer.js",
     "lint": "esw webpack.config.* src buildScripts --color",
     "lint:watch": "npm run lint -- --watch",
@@ -25,6 +26,9 @@
   "author": "Cory House",
   "license": "MIT",
   "dependencies": {
+    "bulma": "^0.6.2",
+    "vue": "2.5.16",
+    "vue-router": "3.0.1",
     "whatwg-fetch": "2.0.3"
   },
   "devDependencies": {
@@ -51,11 +55,13 @@
     "localtunnel": "1.8.3",
     "mocha": "4.0.1",
     "nock": "9.0.22",
+    "node-sass": "^4.8.3",
     "npm-run-all": "4.1.1",
     "nsp": "2.8.1",
     "numeral": "2.0.6",
     "open": "0.0.5",
     "rimraf": "2.6.2",
+    "sass-loader": "^6.0.7",
     "style-loader": "0.19.0",
     "surge": "0.19.0",
     "webpack": "3.6.0",

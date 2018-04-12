@@ -4,6 +4,9 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 export default {
   resolve: {
+    alias: {
+      'vue$': 'vue/dist/vue.esm.js' // 'vue/dist/vue.common.js' for webpack 1
+    },
     extensions: ['*', '.js', '.jsx', '.json']
   },
   devtool: 'inline-source-map',
@@ -31,7 +34,8 @@ export default {
   module: {
     rules: [
       {test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'},
-      {test: /\.css$/, use: ['style-loader','css-loader']}
+      {test: /\.css$/, use: ['style-loader','css-loader']},
+      {test: /\.sass$/, use: ['style-loader','css-loader','sass-loader']}
     ]
   }
 }
