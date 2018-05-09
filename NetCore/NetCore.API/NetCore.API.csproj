@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Features\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
@@ -12,7 +13,8 @@
     <PackageReference Include="AutoMapper" Version="6.2.2" />
     <PackageReference Include="FluentValidation" Version="7.5.2" />
     <PackageReference Include="MediatR" Version="4.1.0" />
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="4.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.7" />
   </ItemGroup>
 
 </Project>

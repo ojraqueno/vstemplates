@@ -1,7 +1,7 @@
 {
-  "name": "javascript-development-environment",
+  "name": "net-core",
   "version": "1.0.0",
-  "description": "JavaScript development environment Pluralsight course by Cory House",
+  "description": "Application template using .NET Core and VueJS",
   "scripts": {
     "prestart": "babel-node buildScripts/startMessage.js",
     "start": "npm-run-all --parallel security-check open:src lint test",
@@ -23,10 +23,11 @@
     "postbuild": "babel-node buildScripts/distServer.js",
     "deploy": "surge ./dist"
   },
-  "author": "Cory House",
+  "author": "OJ Raqueño",
   "license": "MIT",
   "dependencies": {
-    "bulma": "^0.6.2",
+    "axios": "0.18.0",
+    "bulma": "0.6.2",
     "vue": "2.5.16",
     "vue-router": "3.0.1",
     "whatwg-fetch": "2.0.3"
