@@ -1,7 +1,0 @@
-{
-  "name": "mvc5_r",
-  "private": true,
-  "dependencies": {
-    "bootstrap": "3.3.7"
-  }
-}
