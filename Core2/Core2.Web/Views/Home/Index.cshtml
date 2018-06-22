@@ -6,9 +6,43 @@
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bulma/css/bulma.css" />
+        <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.css" />
     </environment>
 </head>
 <body>
-    <h1>Index</h1>
+    <div id="app">
+        <div v-if="error">{{error}}</div>
+
+        <div v-for="value in values">
+            {{value}}
+        </div>
+    </div>
+
+    <environment include="Development">
+        <script src="~/lib/vue/dist/vue.js"></script>
+        <script src="~/lib/axios/dist/axios.js"></script>
+        <script src="~/lib/lodash/lodash.js"></script>
+    </environment>
+
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                error: '',
+                values: []
+            },
+            mounted: function () {
+                console.log('mounted');
+
+                axios.get('api/values/search')
+                    .then(function (response) {
+                        this.values = response.data;
+                    }.bind(this))
+                    .catch(function () {
+                        this.error = 'error';
+                    }.bind(this));
+            }
+        });
+    </script>
 </body>
 </html>
