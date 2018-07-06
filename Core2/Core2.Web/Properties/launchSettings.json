@@ -15,7 +15,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Core2.WebF": {
+    "Core2.Web": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {

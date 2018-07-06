@@ -1,4 +1,4 @@
-namespace Core2.WebF
+namespace Core2.Web
 
 open System
 open System.Collections.Generic

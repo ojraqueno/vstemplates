@@ -1,4 +1,4 @@
-﻿namespace Core2.WebF.Features.Values
+﻿namespace Core2.Web.Features.Values
 
 open System
 open System.Collections.Generic

@@ -1,4 +1,4 @@
-﻿namespace Core2.WebF.Features.Home
+﻿namespace Core2.Web.Features.Home
 
 open Microsoft.AspNetCore.Mvc
 
