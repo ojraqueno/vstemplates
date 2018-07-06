@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Core.Infrastructure.Data;
+using Core.Web.Infrastructure;
 using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -19,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace Core.Web
 {
@@ -63,7 +59,6 @@ namespace Core.Web
 
             services.AddAutoMapper(typeof(Startup));
             services.AddMediatR(typeof(Startup));
-            //services.AddSingleton(_ => Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -90,6 +85,8 @@ namespace Core.Web
             app.UseCookiePolicy();
 
             app.UseAuthentication();
+
+            app.UseMiddleware(typeof(ErrorHandlingMiddleware));
 
             app.UseMvc(routes =>
             {

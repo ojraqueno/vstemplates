@@ -1,25 +1,33 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace Core.Web.Features.Accounts
 {
     [AllowAnonymous]
     public class AccountsController : Controller
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly IMediator _mediator;
 
-        public AccountsController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
+        public AccountsController(IMediator mediator)
         {
-            _signInManager = signInManager;
-            _userManager = userManager;
+            _mediator = mediator;
         }
 
         [HttpGet]
-        public IActionResult Login()
+        public async Task<IActionResult> Login()
         {
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(Login.Command command)
+        {
+            var result = await _mediator.Send(command);
+
+            return Ok();
         }
 
         [HttpGet]
