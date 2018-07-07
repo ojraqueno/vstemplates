@@ -1,7 +1,12 @@
-﻿
-@{
+﻿@{
     Layout = "~/Views/Shared/_LayoutAnonymous.cshtml";
 }
 
-<h2>Register</h2>
+<div id="accounts-register">
+    <h2>Register</h2>
+</div>
 
+@section scripts
+{
+    <script src="~/js/accounts/register.js" asp-append-version="true"></script>
+}
