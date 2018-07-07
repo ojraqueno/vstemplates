@@ -12,10 +12,8 @@ namespace Core.Features.Home
     [AllowAnonymous]
     public class HomeController : Controller
     {
-        public IActionResult Index(bool @throw)
+        public IActionResult Index()
         {
-            if (@throw) throw new Exception();
-
             return View();
         }
 

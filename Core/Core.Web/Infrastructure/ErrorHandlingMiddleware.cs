@@ -2,9 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using System;
-using System.Net;
 using System.Threading.Tasks;
 
 namespace Core.Web.Infrastructure
@@ -31,20 +29,12 @@ namespace Core.Web.Infrastructure
             }
         }
 
-        private static Task HandleExceptionAsync(HttpContext context, Exception exception, IHostingEnvironment hostingEnvironment, IModelMetadataProvider modelMetadataProvider, ILogger<ErrorHandlingMiddleware> logger)
+        private static async Task HandleExceptionAsync(HttpContext context, Exception exception, IHostingEnvironment hostingEnvironment, IModelMetadataProvider modelMetadataProvider, ILogger<ErrorHandlingMiddleware> logger)
         {
-            var code = HttpStatusCode.InternalServerError; // 500 if unexpected
-
-            logger.LogInformation("test error");
-
-            //if (exception is MyNotFoundException) code = HttpStatusCode.NotFound;
-            //else if (exception is MyUnauthorizedException) code = HttpStatusCode.Unauthorized;
-            //else if (exception is MyException) code = HttpStatusCode.BadRequest;
-
-            var result = JsonConvert.SerializeObject(new { error = exception.Message });
-            context.Response.ContentType = "application/json";
-            context.Response.StatusCode = (int)code;
-            return context.Response.WriteAsync(result);
+            await Task.Run(() =>
+            {
+                logger.LogError(exception, exception.InnermostException().Message);
+            });
         }
     }
 }
