@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -17,14 +16,16 @@ namespace Core.Web.Features.Accounts
         }
 
         [HttpGet]
-        public async Task<IActionResult> Login()
+        public IActionResult Login()
         {
             return View();
         }
 
-        [HttpPost]
+        [HttpPost("api/accounts/login")]
         public async Task<IActionResult> Login(Login.Command command)
         {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
             var result = await _mediator.Send(command);
 
             return Ok();
@@ -34,6 +35,16 @@ namespace Core.Web.Features.Accounts
         public IActionResult Register()
         {
             return View();
+        }
+
+        [HttpPost("api/accounts/register")]
+        public async Task<IActionResult> Register([FromBody] Register.Command command)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            var result = await _mediator.Send(command);
+
+            return Ok();
         }
     }
 }

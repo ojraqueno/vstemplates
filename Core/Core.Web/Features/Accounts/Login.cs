@@ -9,6 +9,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Core.Model;
+
 namespace Core.Web.Features.Accounts
 {
     public class Login
@@ -33,10 +35,10 @@ namespace Core.Web.Features.Accounts
         public class CommandHandler : IRequestHandler<Command, CommandResult>
         {
             private readonly AppDbContext _db;
-            private readonly SignInManager<IdentityUser> _signInManager;
-            private readonly UserManager<IdentityUser> _userManager;
+            private readonly SignInManager<AppIdentityUser> _signInManager;
+            private readonly UserManager<AppIdentityUser> _userManager;
 
-            public CommandHandler(AppDbContext db, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
+            public CommandHandler(AppDbContext db, SignInManager<AppIdentityUser> signInManager, UserManager<AppIdentityUser> userManager)
             {
                 _db = db;
                 _signInManager = signInManager;
