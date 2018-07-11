@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Core.Infrastructure.Data;
+using Core1.Infrastructure.Data;
 using FluentValidation;
 using MediatR;
 using System;
@@ -9,9 +9,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Core.Model;
+using Core1.Model;
 
-namespace Core.Web.Features.Accounts
+namespace Core1.Web.Features.Accounts
 {
     public class Login
     {

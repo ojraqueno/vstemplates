@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using Core.Infrastructure.Data;
-using Core.Model;
-using Core.Web.Infrastructure;
+using Core1.Infrastructure.Data;
+using Core1.Model;
+using Core1.Web.Infrastructure;
 using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -20,7 +20,7 @@ using Microsoft.Extensions.FileProviders;
 using Newtonsoft.Json.Serialization;
 using System.IO;
 
-namespace Core.Web
+namespace Core1.Web
 {
     public class Startup
     {

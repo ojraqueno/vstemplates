@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Core.Infrastructure.Data
+namespace Core1.Infrastructure.Data
 {
     public static class DbInitializer
     {

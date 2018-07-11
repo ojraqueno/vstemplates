@@ -1,4 +1,4 @@
-﻿using Core.Infrastructure.Data;
+﻿using Core1.Infrastructure.Data;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 using NLog.Web;
 using System;
 
-namespace Core.Web
+namespace Core1.Web
 {
     public class Program
     {

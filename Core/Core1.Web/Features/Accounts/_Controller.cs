@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace Core.Web.Features.Accounts
+namespace Core1.Web.Features.Accounts
 {
     [AllowAnonymous]
     public class AccountsController : Controller

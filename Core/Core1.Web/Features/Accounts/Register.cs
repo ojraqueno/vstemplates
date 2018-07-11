@@ -1,5 +1,5 @@
-﻿using Core.Infrastructure.Data;
-using Core.Model;
+﻿using Core1.Infrastructure.Data;
+using Core1.Model;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Core.Web.Features.Accounts
+namespace Core1.Web.Features.Accounts
 {
     public class Register
     {

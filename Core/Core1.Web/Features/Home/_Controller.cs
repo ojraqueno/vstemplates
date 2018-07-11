@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Core.Web.Features.Shared;
+using Core1.Web.Features.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Core.Features.Home
+namespace Core1.Features.Home
 {
     [AllowAnonymous]
     public class HomeController : Controller
