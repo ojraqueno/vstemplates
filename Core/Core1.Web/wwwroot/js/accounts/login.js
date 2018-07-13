@@ -4,7 +4,7 @@ import VeeValidate from 'vee-validate';
 Vue.use(VeeValidate);
 
 var page = new Vue({
-    el: '#accounts-register',
+    el: '#accounts-login',
     data: {
         //error: '',
         //values: []
