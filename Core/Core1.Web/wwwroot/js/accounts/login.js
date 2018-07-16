@@ -3,7 +3,7 @@ import VeeValidate from 'vee-validate';
 
 Vue.use(VeeValidate);
 
-var page = new Vue({
+var vm = new Vue({
     el: '#accounts-login',
     data: {
         //error: '',

@@ -2,13 +2,36 @@
     Layout = "~/Views/Shared/_LayoutAnonymous.cshtml";
 }
 
-<div id="accounts-register">
-    <section class="is-hero">
+<div id="accounts-register" v-cloak>
+    <section class="hero is-medium">
         <div class="hero-body">
             <div class="container">
                 <div class="columns">
-                    <div class="column">
-                        <h1 class="title is-1">Register</h1>
+                    <div class="column is-one-third is-offset-one-third">
+                        <h2 class="title is-2 has-text-centered">Register</h2>
+                        <div class="notification is-danger" v-if="error">
+                            <button class="delete" v-on:click="onDeleteNotification()"></button>
+                            {{error}}
+                        </div>
+                        <form v-on:submit.prevent="onSubmit()">
+                            <div class="field">
+                                <label class="label">Email</label>
+                                <div class="control">
+                                    <input class="input" :class="{ 'is-danger': errors.has('email') }" type="email" name="email" v-model="user.email" v-validate="{ 'required': true }">
+                                </div>
+                                <p class="help is-danger" v-if="errors.has('email')">{{errors.first('email')}}</p>
+                            </div>
+                            <div class="field">
+                                <label class="label">Password</label>
+                                <div class="control">
+                                    <input class="input" :class="{ 'is-danger': errors.has('password') }" type="password" name="password" v-model="user.password" v-validate="{ 'required': true }">
+                                </div>
+                                <p class="help is-danger" v-if="errors.has('password')">{{errors.first('password')}}</p>
+                            </div>
+                            <div class="field">
+                                <button class="button is-primary" :class="{ 'is-loading': isBusy }">Register</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
