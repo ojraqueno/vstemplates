@@ -31,6 +31,16 @@ namespace Core1.Web.Features.Accounts
             return Ok();
         }
 
+        [HttpPost("api/account/createToken")]
+        public async Task<IActionResult> CreateToken(CreateToken.Command command)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            var result = await _mediator.Send(command);
+
+            return Created("", result);
+        }
+
         [HttpGet]
         public IActionResult Register()
         {
