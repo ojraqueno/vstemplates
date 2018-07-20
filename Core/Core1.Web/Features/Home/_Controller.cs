@@ -5,24 +5,27 @@ using System.Diagnostics;
 
 namespace Core1.Features.Home
 {
-    [AllowAnonymous]
     public class HomeController : Controller
     {
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return View();
         }
 
+        [AllowAnonymous]
         public IActionResult About()
         {
             return View();
         }
 
+        [AllowAnonymous]
         public IActionResult Contact()
         {
             return View();
         }
 
+        [AllowAnonymous]
         public IActionResult Privacy()
         {
             return View();

@@ -75,6 +75,8 @@ namespace Core1.Web
                     };
                 });
 
+            services.ConfigureApplicationCookie(options => options.LoginPath = "/Accounts/Login");
+
             services
                 .AddMvc(options =>
                 {

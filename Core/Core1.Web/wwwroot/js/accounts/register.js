@@ -2,6 +2,7 @@
 import VeeValidate from 'vee-validate';
 import axios from 'axios';
 import _ from 'lodash';
+import redirect from '../shared/redirect';
 
 Vue.use(VeeValidate);
 
@@ -28,12 +29,11 @@ var vm = new Vue({
 
                         axios.post('/api/accounts/register', this.user)
                             .then(function () {
-
-                                // TODO
-
-                                this.isBusy = false;
-                            })
+                                redirect.redirectToAction('Login', 'Accounts');
+                            }.bind(this))
                             .catch(function (error) {
+                                alert('error');
+                                console.log(error);
                                 if (error.response && error.response.status === 400) {
                                     var serverValidationErrors = error.response.data;
 
@@ -42,7 +42,7 @@ var vm = new Vue({
                                 else {
                                     this.error = 'Unable to complete action. Please try again later.';
                                 }
-                                
+
                                 this.isBusy = false;
                             }.bind(this));
                     }

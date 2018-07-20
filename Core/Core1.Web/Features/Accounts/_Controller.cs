@@ -16,23 +16,25 @@ namespace Core1.Web.Features.Accounts
         }
 
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult Login(string returnUrl)
         {
+            ViewBag.ReturnUrl = returnUrl;
+
             return View();
         }
 
         [HttpPost("api/accounts/login")]
-        public async Task<IActionResult> Login(Login.Command command)
+        public async Task<IActionResult> Login([FromBody] Login.Command command)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
             var result = await _mediator.Send(command);
 
-            return Ok();
+            return Ok(result);
         }
 
         [HttpPost("api/account/createToken")]
-        public async Task<IActionResult> CreateToken(CreateToken.Command command)
+        public async Task<IActionResult> CreateToken([FromBody] CreateToken.Command command)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
