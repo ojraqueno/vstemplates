@@ -46,6 +46,8 @@ namespace Core1.Web.Features.Accounts
             private async Task<bool> HaveCorrectPassword(Command command, string email, CancellationToken token)
             {
                 var user = await _userManager.FindByNameAsync(email);
+                if (user == null) return false;
+
                 var checkPasswordResult = await _signInManager.CheckPasswordSignInAsync(user, command.Password, false);
 
                 return checkPasswordResult.Succeeded;
@@ -70,6 +72,9 @@ namespace Core1.Web.Features.Accounts
 
             public async Task<CommandResult> Handle(Command command, CancellationToken cancellationToken)
             {
+                command.Email = command.Email?.Trim();
+                command.Password = command.Password?.Trim();
+
                 var result = await _signInManager.PasswordSignInAsync(command.Email, command.Password, command.RememberMe, lockoutOnFailure: true);
                 if (!result.Succeeded) throw new Exception($"Login exception for user {command.Email}");
 

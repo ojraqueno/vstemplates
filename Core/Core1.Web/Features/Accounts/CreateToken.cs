@@ -3,10 +3,13 @@ using Core1.Model;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading;
@@ -73,6 +76,7 @@ namespace Core1.Web.Features.Accounts
         {
             public string Token { get; set; }
             public DateTime Expiration { get; set; }
+            public bool Succeeded { get; set; }
         }
 
         public class CommandHandler : IRequestHandler<Command, CommandResult>
@@ -92,15 +96,22 @@ namespace Core1.Web.Features.Accounts
 
             public async Task<CommandResult> Handle(Command command, CancellationToken cancellationToken)
             {
+                command.Username = command.Username?.Trim();
+                command.Password = command.Password?.Trim();
+
                 var commandResult = new CommandResult();
 
                 var user = await _userManager.FindByNameAsync(command.Username);
 
                 var checkPasswordResult = await _signInManager.CheckPasswordSignInAsync(user, command.Password, false);
-                var token = CreateJwtSecurityToken(user);
+                commandResult.Succeeded = checkPasswordResult.Succeeded;
+                if (checkPasswordResult.Succeeded)
+                {
+                    var token = CreateJwtSecurityToken(user);
 
-                commandResult.Token = new JwtSecurityTokenHandler().WriteToken(token);
-                commandResult.Expiration = token.ValidTo;
+                    commandResult.Token = new JwtSecurityTokenHandler().WriteToken(token);
+                    commandResult.Expiration = token.ValidTo;
+                }
 
                 return commandResult;
             }
@@ -111,7 +122,8 @@ namespace Core1.Web.Features.Accounts
                 {
                     new Claim(JwtRegisteredClaimNames.Sub, user.Email),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                    new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName)
+                    new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName),
+                    new Claim(ClaimTypes.NameIdentifier, user.Id)
                 };
 
                 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Security:Tokens:Key"]));
@@ -121,7 +133,7 @@ namespace Core1.Web.Features.Accounts
                     _config["Security:Tokens:Issuer"],
                     _config["Security:Tokens:Audience"],
                     claims,
-                    expires: DateTime.Now.AddMinutes(30),
+                    expires: DateTime.UtcNow.AddDays(14),
                     signingCredentials: creds);
 
                 return token;

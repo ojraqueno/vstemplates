@@ -1,6 +1,9 @@
 ﻿using Core1.Infrastructure.Data;
+using Core1.Infrastructure.Identity;
+using Core1.Model;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NLog.Web;
@@ -24,6 +27,8 @@ namespace Core1.Web
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .CaptureStartupErrors(true)
+                .UseSetting("detailedErrors", "true")
                 .UseStartup<Startup>()
                 .ConfigureLogging(logging =>
                 {
@@ -38,7 +43,9 @@ namespace Core1.Web
             {
                 var services = scope.ServiceProvider;
                 var db = services.GetRequiredService<AppDbContext>();
-                DbInitializer.Seed(db);
+                var userManager = services.GetRequiredService<UserManager<AppIdentityUser>>();
+                var roleManager = services.GetRequiredService<RoleManager<AppIdentityRole>>();
+                DbInitializer.Seed(db, userManager, roleManager);
             }
         }
 

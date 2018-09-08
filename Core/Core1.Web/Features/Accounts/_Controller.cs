@@ -1,24 +1,44 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace Core1.Web.Features.Accounts
 {
-    [AllowAnonymous]
     public class AccountsController : Controller
     {
         private readonly IMediator _mediator;
 
-        public AccountsController(IMediator mediator)
+        public AccountsController(IMediator mediator) => _mediator = mediator;
+
+        [HttpGet]
+        public async Task<IActionResult> ConfirmEmail(ConfirmEmail.Command command)
         {
-            _mediator = mediator;
+            var result = await _mediator.Send(command);
+
+            return View(result);
         }
 
         [HttpGet]
-        public IActionResult Login(string returnUrl)
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost("api/accounts/forgotPassword")]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPassword.Command command)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            var result = await _mediator.Send(command);
+
+            return Ok(result);
+        }
+
+        [HttpGet]
+        public IActionResult Login(string returnUrl, bool? fromRegistration)
         {
             ViewBag.ReturnUrl = returnUrl;
+            ViewBag.FromRegistration = fromRegistration;
 
             return View();
         }
@@ -33,7 +53,17 @@ namespace Core1.Web.Features.Accounts
             return Ok(result);
         }
 
-        [HttpPost("api/account/createToken")]
+        [HttpPost]
+        public async Task<IActionResult> Logout(Logout.Command command)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            var result = await _mediator.Send(command);
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost("api/accounts/createToken")]
         public async Task<IActionResult> CreateToken([FromBody] CreateToken.Command command)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -57,6 +87,24 @@ namespace Core1.Web.Features.Accounts
             var result = await _mediator.Send(command);
 
             return Ok();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ResetPassword(ResetPassword.Query query)
+        {
+            var result = await _mediator.Send(query);
+
+            return View(result);
+        }
+
+        [HttpPost("api/accounts/resetPassword")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPassword.Command command)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            var result = await _mediator.Send(command);
+
+            return Ok(result);
         }
     }
 }

@@ -1,33 +1,21 @@
 ﻿import Vue from 'vue';
 import VeeValidate from 'vee-validate';
-import { Validator } from 'vee-validate';
 import axios from 'axios';
 import _ from 'lodash';
-import redirect from '../shared/redirect';
 
 Vue.use(VeeValidate);
 Vue.config.devtools = true;
 
-const dict = {
-    custom: {
-        agreedToTerms: {
-            required: 'Please agree to the terms and conditions.'
-        }
-    }
-};
-
-Validator.localize('en', dict);
-
 var vm = new Vue({
-    el: '#accounts-register',
+    el: '#accounts-reset-password',
     data: {
-        error: '',
         isBusy: false,
-        plans: [],
+        error: '',
+        message: '',
+        succeeded: false,
         user: {
-            agreedToTerms: false,
+            code: '',
             email: '',
-            name: '',
             password: ''
         }
     },
@@ -39,9 +27,17 @@ var vm = new Vue({
                         this.error = '';
                         this.isBusy = true;
 
-                        axios.post('/api/accounts/register', this.user)
-                            .then(function () {
-                                redirect.redirectToAction('Login', 'Accounts', { fromRegistration: true });
+                        axios.post('/api/accounts/resetPassword', this.user)
+                            .then(function (response) {
+                                if (response.data && response.data.succeeded === true) {
+                                    this.message = 'Password reset successfully.';
+                                    this.succeeded = true;
+                                }
+                                else {
+                                    this.error = 'Something went wrong. Please try again later.';
+                                }
+
+                                this.isBusy = false;
                             }.bind(this))
                             .catch(function (error) {
                                 this.__.handleHttpError(this, error);
@@ -65,5 +61,9 @@ var vm = new Vue({
                 }
             }
         };
+    },
+    mounted() {
+        var model = JSON.parse(document.getElementById('Model').innerHTML);
+        this.user.code = model.code;
     }
 });

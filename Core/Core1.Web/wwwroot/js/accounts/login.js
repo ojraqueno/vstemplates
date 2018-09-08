@@ -6,22 +6,22 @@ import redirect from '../shared/redirect';
 import * as $ from 'jquery';
 
 Vue.use(VeeValidate);
+Vue.config.devtools = true;
 
 var vm = new Vue({
     el: '#accounts-login',
     data: {
         isBusy: false,
         error: '',
+        shoudShowRegisterSuccessMessage: true,
         user: {
             email: '',
             password: '',
+            rememberMe: false,
             returnUrl: $('#ReturnUrl').val()
         }
     },
     methods: {
-        onDeleteNotification: function () {
-            this.error = '';
-        },
         onSubmit: function () {
             this.$validator.validateAll()
                 .then(function (result) {
@@ -34,19 +34,26 @@ var vm = new Vue({
                                 redirect.redirectToPath(response.data.returnUrl);
                             }.bind(this))
                             .catch(function (error) {
-                                if (error.response && error.response.status === 400) {
-                                    var serverValidationErrors = error.response.data;
-
-                                    this.error = _.first(serverValidationErrors[Object.keys(serverValidationErrors)[0]]);
-                                }
-                                else {
-                                    this.error = 'Unable to complete action. Please try again later.';
-                                }
+                                this.__.handleHttpError(this, error);
 
                                 this.isBusy = false;
                             }.bind(this));
                     }
-                }.bind(this))
+                }.bind(this));
         }
+    },
+    created: function () {
+        this.__ = {
+            handleHttpError: function (vm, error) {
+                if (error.response && error.response.status === 400) {
+                    var serverValidationErrors = error.response.data;
+
+                    vm.error = _.first(serverValidationErrors[Object.keys(serverValidationErrors)[0]]);
+                }
+                else {
+                    vm.error = 'Unable to complete action. Please try again later.';
+                }
+            }
+        };
     }
 });
