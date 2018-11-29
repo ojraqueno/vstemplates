@@ -5,7 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="webpack.config.js" />
+    <None Remove="webpack.dev.js" />
+    <None Remove="webpack.prod.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -104,7 +105,8 @@
     <Content Include="node_modules\font-awesome\fonts\FontAwesome.otf" />
     <Content Include="node_modules\font-awesome\HELP-US-OUT.txt" />
     <Content Include="node_modules\font-awesome\package.json" />
-    <Content Include="webpack.config.js" />
+    <Content Include="webpack.prod.js" />
+    <Content Include="webpack.dev.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -203,11 +205,16 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="8.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.0.0" />
+    <PackageReference Include="Dapper" Version="1.50.5" />
+    <PackageReference Include="DocumentFormat.OpenXml" Version="2.8.1" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="8.0.101" />
+    <PackageReference Include="Humanizer.Core" Version="2.5.16" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="5.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.6" />
+    <PackageReference Include="NLog.Extended" Version="4.5.11" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="4.7.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.5.1" />
   </ItemGroup>
 
   <ItemGroup>
