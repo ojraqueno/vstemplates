@@ -1,0 +1,78 @@
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{
+    ViewData["Title"] = "Login";
+    ViewData["ShowHeader"] = false;
+    ViewData["ShowCookieConsent"] = false;
+}
+
+<section class="hero is-medium" id="accounts-login" v-cloak>
+    <div class="hero-body">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-one-third is-offset-one-third">
+                    @if (ViewBag.FromRegistration == true)
+                    {
+                        <div class="notification is-success" v-if="shoudShowRegisterSuccessMessage">
+                            <button class="delete" v-on:click="shoudShowRegisterSuccessMessage = false"></button>
+                            Registration successful! Please login now.
+                        </div>
+                    }
+                    <h2 class="title is-2 has-text-centered">@Configuration["AppMetadata:Name"]</h2>
+                    <h2 class="title is-3 has-text-centered">Login</h2>
+                    <div class="notification is-danger" v-if="error">
+                        <button class="delete" v-on:click="error = ''"></button>
+                        {{error}}
+                    </div>
+                    <form v-on:submit.prevent="onSubmit()">
+                        <input type="hidden" id="ReturnUrl" name="ReturnUrl" value="@ViewBag.ReturnUrl">
+                        <div class="field">
+                            <label class="label">Email</label>
+                            <div class="control">
+                                <input class="input" autofocus :class="{ 'is-danger': errors.has('email') }" type="email" name="email" v-model.trim="user.email" v-validate.disable="{ 'required': true }">
+                            </div>
+                            <p class="help is-danger" v-if="errors.has('email')">{{errors.first('email')}}</p>
+                        </div>
+                        <div class="field">
+                            <label class="label">Password</label>
+                            <div class="control">
+                                <input class="input" :class="{ 'is-danger': errors.has('password') }" type="password" name="password" v-model.trim="user.password" v-validate.disable="{ 'required': true }">
+                            </div>
+                            <p class="help is-danger" v-if="errors.has('password')">{{errors.first('password')}}</p>
+                        </div>
+                        <nav class="level">
+                            <div class="level-left">
+                                <div class="level-item">
+                                    <div class="field">
+                                        <label class="checkbox">
+                                            <input type="checkbox" v-model="user.rememberMe">
+                                            Remember me
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="level-right">
+                                <div class="level-item">
+                                    <div class="field">
+                                        <a href="~/Accounts/ForgotPassword">Forgot password?</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                        <div class="field">
+                            <button class="button is-primary is-fullwidth" :class="{ 'is-loading': isBusy }">Login</button>
+                        </div>
+                        <div class="field has-text-centered">
+                            <a href="~/Accounts/Register">Register for a new account</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section scripts
+{
+    <script src="~/dist/accounts-login.bundle.js" asp-append-version="true"></script>
+}

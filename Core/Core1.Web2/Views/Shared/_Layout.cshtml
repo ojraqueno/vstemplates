@@ -1,0 +1,118 @@
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - @Configuration["AppMetadata:Name"]</title>
+
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bulma/css/bulma.css" />
+        <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.css" />
+        <link rel="stylesheet" href="~/lib/animate.css/animate.css" />
+        <link rel="stylesheet" href="~/css/shared/app.css" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css"
+              asp-fallback-href="~/lib/bulma/css/bulma.min.css" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+              asp-fallback-href="~/lib/font-awesome/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css"
+              asp-fallback-href="~/lib/animate.css/animate.min.css" />
+        <link rel="stylesheet" href="~/css/shared/app.css" asp-append-version="true" />
+    </environment>
+    @RenderSection("styles", required: false)
+</head>
+<body class="sf-site">
+    @if (ViewData["ShowHeader"] == null || Convert.ToBoolean(ViewData["ShowHeader"]))
+    {
+        <nav id="navbar" class="navbar is-dark print-hidden" role="navigation" aria-label="main navigation">
+            <div class="container">
+                <div class="navbar-brand">
+                    <a class="navbar-item" asp-controller="Home" asp-action="Index">
+                        <img src="~/images/core1.png" alt="@String.Format("{0} Logo", Configuration["AppMetadata:Name"])" />
+                    </a>
+                    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" v-on:click="toggleActive()">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                <div class="navbar-menu" :class="{ 'is-active': isActive }">
+                    <div class="navbar-start">
+                        <a class="navbar-item" asp-controller="Home" asp-action="Index">Home</a>
+                        <a class="navbar-item" asp-controller="Home" asp-action="About">About</a>
+                        <a class="navbar-item" asp-controller="Home" asp-action="Contact">Contact</a>
+                    </div>
+                    <div class="navbar-end">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <div class="navbar-item has-dropdown is-hoverable">
+                                <a class="navbar-link">
+                                    @User.Identity.Name
+                                </a>
+                                <div class="navbar-dropdown">
+                                    <div class="navbar-item">
+                                        <form action="~/Accounts/Logout" method="post">
+                                            <button type="submit" class="button is-link is-small is-fullwidth">Logout</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="navbar-item">
+                                <div class="field is-grouped">
+                                    <p class="control">
+                                        <a class="button is-link" href="/Accounts/Login">
+                                            <span class="icon">
+                                                <i class="fa fa-sign-in" aria-hidden="true"></i>
+                                            </span>
+                                            <span>Login</span>
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </nav>
+    }
+
+    @if (ViewData["ShowCookieConsent"] == null || Convert.ToBoolean(ViewData["ShowCookieConsent"]))
+    {
+        <partial name="_CookieConsentPartial" />
+    }
+
+    <div class="sf-site-content">
+        @RenderBody()
+    </div>
+
+    @if (ViewData["ShowFooter"] == null || Convert.ToBoolean(ViewData["ShowFooter"]))
+    {
+        <footer class="footer">
+            <div class="content has-text-centered">
+                <p>
+                    &copy; @DateTime.UtcNow.Year - @Configuration["AppMetadata:Name"]
+                </p>
+            </div>
+        </footer>
+    }
+
+    <environment exclude="Development">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.min.js"
+                asp-fallback-src="~/lib/vue/dist/vue.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"
+                asp-fallback-src="~/lib/axios/dist/axios.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.min.js"
+                asp-fallback-src="~/lib/lodash/lodash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vee-validate/2.0.9/vee-validate.min.js"
+                asp-fallback-src="~/lib/vee-validate/dist/vee-validate.min.js"></script>
+    </environment>
+    <script src="~/dist/layout.bundle.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>
