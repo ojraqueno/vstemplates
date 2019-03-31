@@ -10,7 +10,7 @@ using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Core1.Web2.Features.Accounts
+namespace Core1.Web.Features.Accounts
 {
     public class ForgotPassword
     {

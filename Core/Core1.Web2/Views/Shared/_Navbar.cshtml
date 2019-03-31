@@ -1,0 +1,53 @@
+﻿<nav id="navbar" class="navbar is-dark print-hidden" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item" asp-controller="Home" asp-action="Index">
+                <img src="~/images/core1.png" alt="@String.Format("{0} Logo", Configuration["AppMetadata:Name"])" />
+            </a>
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" v-on:click="toggleActive()">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div class="navbar-menu" :class="{ 'is-active': isActive }">
+            <div class="navbar-start">
+                <a class="navbar-item" asp-controller="Home" asp-action="Index">Home</a>
+                <a class="navbar-item" asp-controller="Home" asp-action="About">About</a>
+                <a class="navbar-item" asp-controller="Home" asp-action="Contact">Contact</a>
+            </div>
+            <div class="navbar-end">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a class="navbar-link">
+                            @User.Identity.Name
+                        </a>
+                        <div class="navbar-dropdown">
+                            <div class="navbar-item">
+                                <form action="~/Accounts/Logout" method="post">
+                                    <button type="submit" class="button is-link is-small is-fullwidth">Logout</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="navbar-item">
+                        <div class="field is-grouped">
+                            <p class="control">
+                                <a class="button is-link" href="/Accounts/Login">
+                                    <span class="icon">
+                                        <i class="fas fa-sign-in-alt" aria-hidden="true"></i>
+                                    </span>
+                                    <span>Login</span>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</nav>

@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 
-namespace Core1.Web2.Infrastructure
+namespace Core1.Web.Infrastructure
 {
     // More info: https://stackoverflow.com/questions/38630076/asp-net-core-web-api-exception-handling
     public class ErrorHandlingMiddleware

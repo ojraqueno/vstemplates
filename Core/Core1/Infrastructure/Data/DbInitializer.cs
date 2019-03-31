@@ -53,7 +53,7 @@ namespace Core1.Infrastructure.Data
             var defaultAdmin = userManager.FindByNameAsync("core1@email.com").ConfigureAwait(false).GetAwaiter().GetResult();
             if (defaultAdmin != null) return;
 
-            var user = new AppIdentityUser { UserName = "core1@email.com", Email = "core1@email.com" };
+            var user = new AppIdentityUser { UserName = "core1@email.com", Email = "core1@email.com", EmailConfirmed = true };
             var createUserResult = userManager.CreateAsync(user, "password123").ConfigureAwait(false).GetAwaiter().GetResult();
             if (!createUserResult.Succeeded) throw new Exception("Failed to create seed user!");
 

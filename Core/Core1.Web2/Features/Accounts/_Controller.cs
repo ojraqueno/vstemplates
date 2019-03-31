@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace Core1.Web2.Features.Accounts
+namespace Core1.Web.Features.Accounts
 {
     public class AccountsController : Controller
     {

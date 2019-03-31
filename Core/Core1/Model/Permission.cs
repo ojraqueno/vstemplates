@@ -2,5 +2,6 @@
 {
     public enum Permission
     {
+        AccountChangePassword = 100
     }
 }

@@ -1,4 +1,4 @@
-﻿using Core1.Web2.Features.Shared;
+﻿using Core1.Web.Features.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;

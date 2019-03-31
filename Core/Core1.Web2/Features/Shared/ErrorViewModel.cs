@@ -1,6 +1,6 @@
 using System;
 
-namespace Core1.Web2.Features.Shared
+namespace Core1.Web.Features.Shared
 {
     public class ErrorViewModel
     {

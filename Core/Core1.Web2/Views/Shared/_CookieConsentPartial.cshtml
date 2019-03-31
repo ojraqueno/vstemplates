@@ -8,13 +8,16 @@
 
 @if (showBanner)
 {
-    <div id="cookieConsent" style="position: fixed; bottom: 0%; width: 100%; z-index: 10; margin-bottom: 10px;">
-        <div class="container">
-            <div class="columns">
-                <div class="column">
-                    <div class="notification is-info">
-                        <p class="content">We use cookies to create the best experience for our customers.</p>
-                        <a href="~/Home/Privacy" class="button is-primary">Learn More</a>
+    <div id="cookieConsent" style="position: fixed; bottom: 0%; width: 100%; z-index: 10;">
+        <div class="notification is-info">
+            <div class="level">
+                <div class="level-left">
+                    <div class="level-item">
+                        <p class="content">We use cookies in accordance with our <a href="~/Home/Privacy" target="_blank">Privacy Policy</a> to create the best experience for you.</p>
+                    </div>
+                </div>
+                <div class="level-right">
+                    <div class="level-item">
                         <button type="button" class="button is-success" data-cookie-string="@cookieString">Accept</button>
                     </div>
                 </div>

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 
-namespace Core1.Web2.Infrastructure
+namespace Core1.Web.Infrastructure
 {
     public interface IUserContext
     {

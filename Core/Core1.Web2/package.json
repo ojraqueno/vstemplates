@@ -1,5 +1,5 @@
 {
-  "name": "core1.web2",
+  "name": "core1.web",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -18,19 +18,11 @@
     "bulma": "0.7.4",
     "bulma-extensions": "4.1.0",
     "chart.js": "2.7.3",
-    "chartjs-plugin-datalabels": "0.5.0",
-    "chartjs-plugin-labels": "1.1.0",
-    "font-awesome": "4.7.0",
     "jquery": "3.3.1",
-    "jstat": "1.7.1",
     "lodash": "4.17.11",
     "moment": "2.24.0",
     "vee-validate": "2.1.7",
-    "vue": "2.6.6",
-    "vue-color": "2.7.0",
-    "vue-editor-markdown": "1.0.2",
-    "vue-textarea-autosize": "1.0.4",
-    "vuedraggable": "2.17.0"
+    "vue": "2.6.6"
   },
   "devDependencies": {
     "@babel/core": "7.3.3",
@@ -46,7 +38,7 @@
     "vue-style-loader": "4.1.2",
     "vue-template-compiler": "2.6.6",
     "webpack": "4.29.4",
-    "webpack-bundle-analyzer": "^3.0.3",
+    "webpack-bundle-analyzer": "3.0.3",
     "webpack-cli": "3.2.3"
   }
 }

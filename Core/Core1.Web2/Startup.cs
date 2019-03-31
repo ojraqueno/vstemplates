@@ -3,7 +3,7 @@ using Core1.Infrastructure.Data;
 using Core1.Infrastructure.Email;
 using Core1.Infrastructure.Identity;
 using Core1.Model;
-using Core1.Web2.Infrastructure;
+using Core1.Web.Infrastructure;
 using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -22,7 +22,7 @@ using Newtonsoft.Json.Serialization;
 using System.IO;
 using System.Text;
 
-namespace Core1.Web2
+namespace Core1.Web
 {
     public class Startup
     {

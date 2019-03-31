@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 using NLog.Web;
 using System;
 
-namespace Core1.Web2
+namespace Core1.Web
 {
     public class Program
     {
