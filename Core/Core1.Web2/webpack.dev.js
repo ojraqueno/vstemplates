@@ -10,7 +10,7 @@ module.exports = {
         'accounts-login': './wwwroot/js/accounts/login.js',
         'accounts-register': './wwwroot/js/accounts/register.js',
         'accounts-reset-password': './wwwroot/js/accounts/reset-password.js',
-        'filters': './wwwroot/js/shared/filters.js',
+        'home-index': './wwwroot/js/home/index.js',
         'shared-layout': './wwwroot/js/shared/layout.js'
     },
     module: {

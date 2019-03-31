@@ -128,11 +128,14 @@ namespace Core1.Web
 
             app.UseStaticFiles();
 
-            app.UseStaticFiles(new StaticFileOptions()
+            if (env.IsDevelopment())
             {
-                RequestPath = "/lib",
-                FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "node_modules/"))
-            });
+                app.UseStaticFiles(new StaticFileOptions()
+                {
+                    RequestPath = "/lib",
+                    FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "node_modules/"))
+                });
+            }
 
             app.UseCookiePolicy();
 
