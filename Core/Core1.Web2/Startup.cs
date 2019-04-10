@@ -79,7 +79,11 @@ namespace Core1.Web
                     };
                 });
 
-            services.ConfigureApplicationCookie(options => options.LoginPath = "/Accounts/Login");
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Accounts/Login";
+                options.AccessDeniedPath = "/Accounts/Login";
+            });
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
