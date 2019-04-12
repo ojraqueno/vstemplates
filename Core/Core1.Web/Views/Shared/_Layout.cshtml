@@ -64,6 +64,12 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/vee-validate/2.1.7/vee-validate.min.js"
                 asp-fallback-src="~/lib/vee-validate/dist/vee-validate.min.js"></script>
     </environment>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <script type="application/json" id="CurrentUser">
+            @Json.Serialize(UserContext.CurrentUser)
+        </script>
+    }
     <script src="~/dist/shared-layout.bundle.js"></script>
     @RenderSection("scripts", required: false)
 </body>
