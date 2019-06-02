@@ -1,4 +1,4 @@
-﻿namespace Enketo.RazorEmails.EmailViews.Shared
+﻿namespace Core1.RazorEmails.EmailViews.Shared
 {
     public class EmailButtonViewModel
     {

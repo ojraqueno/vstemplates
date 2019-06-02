@@ -13,7 +13,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 // https://scottsauber.com/2018/07/07/walkthrough-creating-an-html-email-template-with-razor-and-razor-class-libraries-and-rendering-it-from-a-net-standard-class-library/
-namespace Enketo.RazorEmails.Infrastructure
+namespace Core1.RazorEmails.Infrastructure
 {
     public interface IViewRenderer
     {

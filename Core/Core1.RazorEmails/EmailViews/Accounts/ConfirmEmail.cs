@@ -1,6 +1,6 @@
-﻿using Enketo.RazorEmails.Infrastructure;
+﻿using Core1.RazorEmails.Infrastructure;
 
-namespace Enketo.RazorEmails.EmailViews.Accounts
+namespace Core1.RazorEmails.EmailViews.Accounts
 {
     public class ConfirmEmail : BaseEmailViewModel
     {

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Enketo.RazorEmails.Infrastructure
+namespace Core1.RazorEmails.Infrastructure
 {
     public abstract class BaseEmailViewModel
     {
