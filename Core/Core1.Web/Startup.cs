@@ -21,6 +21,7 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
 using System.IO;
 using System.Text;
+using Core1.RazorEmails.Infrastructure;
 
 namespace Core1.Web
 {
@@ -113,6 +114,7 @@ namespace Core1.Web
             services.AddMediatR(typeof(Startup));
 
             services.AddScoped<IUserContext, UserContext>();
+            services.AddScoped<IViewRenderer, ViewRenderer>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

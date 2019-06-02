@@ -223,6 +223,7 @@
 
 
   <ItemGroup>
+    <ProjectReference Include="..\Core1.RazorEmails\Core1.RazorEmails.csproj" />
     <ProjectReference Include="..\Core1\Core1.csproj" />
   </ItemGroup>
 
