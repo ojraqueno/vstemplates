@@ -21,27 +21,27 @@
                         <div class="field">
                             <label class="label">Name</label>
                             <div class="control">
-                                <input class="input" autofocus autocomplete="off" :class="{ 'is-danger': errors.has('name') }" type="text" name="name" v-model.trim="user.name" v-validate.disable="{ 'required': true }">
+                                <input class="input" autofocus autocomplete="off" :class="{ 'is-danger': errors.has('name') }" type="text" name="name" v-model.trim="user.name" v-validate.disable="{ 'required': true }" v-bind:disabled="isBusy">
                             </div>
                             <p class="help is-danger" v-if="errors.has('name')">{{errors.first('name')}}</p>
                         </div>
                         <div class="field">
                             <label class="label">Email</label>
                             <div class="control">
-                                <input class="input" autocomplete="off" :class="{ 'is-danger': errors.has('email') }" type="email" name="email" v-model.trim="user.email" v-validate.disable="{ 'required': true }">
+                                <input class="input" autocomplete="off" :class="{ 'is-danger': errors.has('email') }" type="email" name="email" v-model.trim="user.email" v-validate.disable="{ 'required': true }" v-bind:disabled="isBusy">
                             </div>
                             <p class="help is-danger" v-if="errors.has('email')">{{errors.first('email')}}</p>
                         </div>
                         <div class="field">
                             <label class="label">Password</label>
                             <div class="control">
-                                <input class="input" autocomplete="off" :class="{ 'is-danger': errors.has('password') }" type="password" name="password" v-model.trim="user.password" v-validate.disable="{ 'required': true }">
+                                <input class="input" autocomplete="off" :class="{ 'is-danger': errors.has('password') }" type="password" name="password" v-model.trim="user.password" v-validate.disable="{ 'required': true }" v-bind:disabled="isBusy">
                             </div>
                             <p class="help is-danger" v-if="errors.has('password')">{{errors.first('password')}}</p>
                         </div>
                         <div class="field">
                             <label class="checkbox">
-                                <input type="checkbox" name="agreedToTerms" v-model="user.agreedToTerms" v-validate.disable="{ 'required': true }">
+                                <input type="checkbox" name="agreedToTerms" v-model="user.agreedToTerms" v-validate.disable="{ 'required': true }" v-bind:disabled="isBusy">
                                 I agree to the <a href="~/Home/Terms">Terms and Conditions</a>.
                             </label>
                             <p class="help is-danger" v-if="errors.has('agreedToTerms')">{{errors.first('agreedToTerms')}}</p>

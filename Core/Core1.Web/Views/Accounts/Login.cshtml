@@ -29,14 +29,14 @@
                         <div class="field">
                             <label class="label">Email</label>
                             <div class="control">
-                                <input class="input" autofocus :class="{ 'is-danger': errors.has('email') }" type="email" name="email" v-model.trim="user.email" v-validate.disable="{ 'required': true }">
+                                <input class="input" autofocus :class="{ 'is-danger': errors.has('email') }" type="email" name="email" v-model.trim="user.email" v-validate.disable="{ 'required': true }" v-bind:disabled="isBusy">
                             </div>
                             <p class="help is-danger" v-if="errors.has('email')">{{errors.first('email')}}</p>
                         </div>
                         <div class="field">
                             <label class="label">Password</label>
                             <div class="control">
-                                <input class="input" :class="{ 'is-danger': errors.has('password') }" type="password" name="password" v-model.trim="user.password" v-validate.disable="{ 'required': true }">
+                                <input class="input" :class="{ 'is-danger': errors.has('password') }" type="password" name="password" v-model.trim="user.password" v-validate.disable="{ 'required': true }" v-bind:disabled="isBusy">
                             </div>
                             <p class="help is-danger" v-if="errors.has('password')">{{errors.first('password')}}</p>
                         </div>
@@ -45,7 +45,7 @@
                                 <div class="level-item">
                                     <div class="field">
                                         <label class="checkbox">
-                                            <input type="checkbox" v-model="user.rememberMe">
+                                            <input type="checkbox" v-model="user.rememberMe" v-bind:disabled="isBusy">
                                             Remember me
                                         </label>
                                     </div>
