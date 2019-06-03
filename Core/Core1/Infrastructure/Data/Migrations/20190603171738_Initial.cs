@@ -49,6 +49,27 @@ namespace Core1.Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Logs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Action = table.Column<string>(nullable: true),
+                    Controller = table.Column<string>(nullable: true),
+                    Exception = table.Column<string>(nullable: true),
+                    Level = table.Column<string>(nullable: true),
+                    Logger = table.Column<string>(nullable: true),
+                    Message = table.Column<string>(nullable: true),
+                    RequestBody = table.Column<string>(nullable: true),
+                    Timestamp = table.Column<DateTime>(nullable: true),
+                    User = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Logs", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -210,6 +231,9 @@ namespace Core1.Infrastructure.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Logs");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

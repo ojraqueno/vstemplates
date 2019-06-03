@@ -15,5 +15,7 @@ namespace Core1.Infrastructure.Data
         {
 
         }
+
+        public DbSet<Log> Logs { get; set; }
     }
 }

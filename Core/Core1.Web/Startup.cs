@@ -120,6 +120,9 @@ namespace Core1.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            var defaultConnection = Configuration.GetConnectionString("AppDbContext");
+            NLog.GlobalDiagnosticsContext.Set("defaultConnection", defaultConnection);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
