@@ -1,10 +1,10 @@
 ﻿using Core1.Infrastructure.Data;
+using Core1.Infrastructure.Email;
 using Core1.Model;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -58,12 +58,37 @@ namespace Core1.Web.Features.Accounts
                     .DependentRules(() =>
                     {
                         RuleFor(c => c.Password)
-                            .MustAsync(BeAValidPassword)
-                            .WithMessage("Invalid password.");
+                            .MustAsync(BeNotTooShort)
+                            .WithMessage("Password must be at least 6 characters.")
+                            .DependentRules(() =>
+                            {
+                                RuleFor(c => c.Password)
+                                   .MustAsync(HaveANumber)
+                                   .WithMessage("Password must have at least one digit ('0'-'9').")
+                                   .DependentRules(() =>
+                                   {
+                                       RuleFor(c => c.Password)
+                                           .MustAsync(BeAValidPassword)
+                                           .WithMessage("Invalid password.");
+                                   });
+                            });
                     });
             }
 
-            private async Task<bool> BeAValidEmail(string email, CancellationToken arg2)
+            private async Task<bool> BeNotTooShort(string password, CancellationToken token)
+            {
+                var identityErrors = new List<IdentityError>();
+
+                foreach (var passwordValidator in _userManager.PasswordValidators)
+                {
+                    var validatePasswordResult = await passwordValidator.ValidateAsync(_userManager, null, password);
+                    identityErrors.AddRange(validatePasswordResult.Errors);
+                }
+
+                return !identityErrors.Any(e => e.Code == "PasswordTooShort");
+            }
+
+            private async Task<bool> BeAValidEmail(string email, CancellationToken token)
             {
                 var identityErrors = new List<IdentityError>();
 
@@ -76,7 +101,7 @@ namespace Core1.Web.Features.Accounts
                 return !identityErrors.Any();
             }
 
-            private async Task<bool> BeAValidPassword(string password, CancellationToken arg2)
+            private async Task<bool> BeAValidPassword(string password, CancellationToken token)
             {
                 var identityErrors = new List<IdentityError>();
 
@@ -87,6 +112,19 @@ namespace Core1.Web.Features.Accounts
                 }
 
                 return !identityErrors.Any();
+            }
+
+            private async Task<bool> HaveANumber(string password, CancellationToken token)
+            {
+                var identityErrors = new List<IdentityError>();
+
+                foreach (var passwordValidator in _userManager.PasswordValidators)
+                {
+                    var validatePasswordResult = await passwordValidator.ValidateAsync(_userManager, null, password);
+                    identityErrors.AddRange(validatePasswordResult.Errors);
+                }
+
+                return !identityErrors.Any(e => e.Code == "PasswordRequiresDigit");
             }
         }
 
@@ -132,8 +170,6 @@ namespace Core1.Web.Features.Accounts
 
                 // Don't wait for finish
                 Task.Run(async () => await SendConfirmationEmail(command, user));
-
-                await _db.SaveChangesAsync();
 
                 return new CommandResult();
             }

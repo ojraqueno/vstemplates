@@ -52,8 +52,12 @@ namespace Core1.Infrastructure.Data.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
+                    b.Property<DateTime>("AddedOn");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
+
+                    b.Property<DateTime?>("DeletedOn");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256);
@@ -63,6 +67,8 @@ namespace Core1.Infrastructure.Data.Migrations
                     b.Property<bool>("LockoutEnabled");
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
+
+                    b.Property<DateTime?>("ModifiedOn");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256);
@@ -77,6 +83,8 @@ namespace Core1.Infrastructure.Data.Migrations
                     b.Property<bool>("PhoneNumberConfirmed");
 
                     b.Property<string>("SecurityStamp");
+
+                    b.Property<int?>("TimezoneOffsetMinutes");
 
                     b.Property<bool>("TwoFactorEnabled");
 
