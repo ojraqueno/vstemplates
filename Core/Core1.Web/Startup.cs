@@ -2,7 +2,9 @@
 using Core1.Infrastructure.Data;
 using Core1.Infrastructure.Email;
 using Core1.Infrastructure.Identity;
+using Core1.Infrastructure.Storage;
 using Core1.Model;
+using Core1.RazorEmails.Infrastructure;
 using Core1.Web.Infrastructure;
 using FluentValidation.AspNetCore;
 using MediatR;
@@ -10,9 +12,9 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Routing;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,7 +23,6 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
 using System.IO;
 using System.Text;
-using Core1.RazorEmails.Infrastructure;
 
 namespace Core1.Web
 {
@@ -107,7 +108,8 @@ namespace Core1.Web
                 })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddSingleton<Core1.Infrastructure.Email.IEmailSender, EmailSender>();
+            services.AddSingleton<IEmailSender, EmailSender>();
+            services.AddSingleton<IWebStorage, AzureStorage>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
 
             services.AddAutoMapper(typeof(Startup));
