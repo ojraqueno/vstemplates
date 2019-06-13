@@ -7,8 +7,6 @@
   <ItemGroup>
     <Compile Remove="Infrastructure\Data\Migrations\20190603171738_Initial.cs" />
     <Compile Remove="Infrastructure\Data\Migrations\20190603171738_Initial.Designer.cs" />
-    <Compile Remove="Migrations\20190608023727_Initial.cs" />
-    <Compile Remove="Migrations\20190608023727_Initial.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,10 +20,6 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
     <PackageReference Include="Sendgrid" Version="9.10.0" />
     <PackageReference Include="WindowsAzure.Storage" Version="9.3.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

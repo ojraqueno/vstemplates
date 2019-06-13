@@ -12,12 +12,12 @@ namespace Core1.Infrastructure.Data
         public static void Seed(AppDbContext db, UserManager<AppIdentityUser> userManager, RoleManager<AppIdentityRole> roleManager)
         {
             EnsureRolesSeeded(db, roleManager);
-            EnsureApplicationAdminSeeded(userManager);
+            EnsureSuperAdminSeeded(userManager);
         }
 
         private static void EnsureRolesSeeded(AppDbContext db, RoleManager<AppIdentityRole> roleManager)
         {
-            var roleNames = new string[] { RoleNames.ApplicationAdmin, RoleNames.CustomerAdmin };
+            var roleNames = new string[] { RoleNames.SuperAdmin };
 
             foreach (string roleName in roleNames)
             {
@@ -30,12 +30,8 @@ namespace Core1.Infrastructure.Data
                 IList<Permission> permissions = new List<Permission>();
                 switch (roleName)
                 {
-                    case RoleNames.ApplicationAdmin:
+                    case RoleNames.SuperAdmin:
                         permissions = PermissionHelper.ApplicationAdminPermissions;
-                        break;
-
-                    case RoleNames.CustomerAdmin:
-                        permissions = PermissionHelper.CustomerAdminPermissions;
                         break;
 
                     default:
@@ -48,16 +44,21 @@ namespace Core1.Infrastructure.Data
             }
         }
 
-        private static void EnsureApplicationAdminSeeded(UserManager<AppIdentityUser> userManager)
+        private static void EnsureSuperAdminSeeded(UserManager<AppIdentityUser> userManager)
         {
-            var defaultAdmin = userManager.FindByNameAsync("core1@email.com").ConfigureAwait(false).GetAwaiter().GetResult();
-            if (defaultAdmin != null) return;
+            var superAdminUsernames = new List<string> { "core1@gmail.com" };
 
-            var user = new AppIdentityUser { UserName = "core1@email.com", Email = "core1@email.com", EmailConfirmed = true };
-            var createUserResult = userManager.CreateAsync(user, "password123").ConfigureAwait(false).GetAwaiter().GetResult();
-            if (!createUserResult.Succeeded) throw new Exception("Failed to create seed user!");
+            foreach (var username in superAdminUsernames)
+            {
+                var defaultAdmin = userManager.FindByNameAsync(username).ConfigureAwait(false).GetAwaiter().GetResult();
+                if (defaultAdmin != null) return;
 
-            var addToRoleResult = userManager.AddToRoleAsync(user, RoleNames.ApplicationAdmin).ConfigureAwait(false).GetAwaiter().GetResult();
+                var user = new AppIdentityUser { AddedOn = DateTime.UtcNow, UserName = username, Email = username, EmailConfirmed = true, TimezoneOffsetMinutes = TimezoneOffsets.Philippines };
+                var createUserResult = userManager.CreateAsync(user, "password123").ConfigureAwait(false).GetAwaiter().GetResult();
+                if (!createUserResult.Succeeded) throw new Exception("Failed to create seed user!");
+
+                var addToRoleResult = userManager.AddToRoleAsync(user, RoleNames.SuperAdmin).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
         }
     }
 }

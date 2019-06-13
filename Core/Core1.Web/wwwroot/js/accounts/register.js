@@ -28,7 +28,8 @@ var vm = new Vue({
             agreedToTerms: false,
             email: '',
             name: '',
-            password: ''
+            password: '',
+            timezoneOffsetMinutes: new Date().getTimezoneOffset()
         }
     },
     methods: {

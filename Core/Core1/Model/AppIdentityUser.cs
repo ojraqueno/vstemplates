@@ -9,5 +9,6 @@ namespace Core1.Model
         public DateTime? DeletedOn { get; set; }
         public DateTime? ModifiedOn { get; set; }
         public int? TimezoneOffsetMinutes { get; set; }
+        public UserType Type { get; set; }
     }
 }

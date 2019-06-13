@@ -2,7 +2,6 @@
 {
     public class RoleNames
     {
-        public const string ApplicationAdmin = "Application Admin";
-        public const string CustomerAdmin = "Customer Admin";
+        public const string SuperAdmin = "Super Admin";
     }
 }

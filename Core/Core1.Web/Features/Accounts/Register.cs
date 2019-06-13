@@ -23,6 +23,7 @@ namespace Core1.Web.Features.Accounts
             public string Email { get; set; }
             public string Name { get; set; }
             public string Password { get; set; }
+            public int? TimezoneOffsetMinutes { get; set; }
         }
 
         public class CommandValidator : AbstractValidator<Command>
@@ -159,14 +160,14 @@ namespace Core1.Web.Features.Accounts
 
                 var user = new AppIdentityUser
                 {
+                    AddedOn = now,
                     Email = command.Email,
-                    UserName = command.Email
+                    UserName = command.Email,
+                    TimezoneOffsetMinutes = command.TimezoneOffsetMinutes
                 };
 
                 var createUserResult = await _userManager.CreateAsync(user, command.Password);
                 if (!createUserResult.Succeeded) throw new Exception("Failed to create user!");
-
-                await _userManager.AddToRoleAsync(user, RoleNames.CustomerAdmin);
 
                 // Don't wait for finish
                 Task.Run(async () => await SendConfirmationEmail(command, user));

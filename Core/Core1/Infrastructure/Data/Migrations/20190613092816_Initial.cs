@@ -45,7 +45,8 @@ namespace Core1.Infrastructure.Data.Migrations
                     AddedOn = table.Column<DateTime>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     ModifiedOn = table.Column<DateTime>(nullable: true),
-                    TimezoneOffsetMinutes = table.Column<int>(nullable: true)
+                    TimezoneOffsetMinutes = table.Column<int>(nullable: true),
+                    Type = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
