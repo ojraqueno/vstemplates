@@ -1,10 +1,10 @@
 ﻿using Core1.Infrastructure.Data;
+using Core1.Infrastructure.Email;
 using Core1.Model;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Encodings.Web;
 using System.Threading;

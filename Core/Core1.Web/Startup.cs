@@ -23,6 +23,7 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
 using System.IO;
 using System.Text;
+using System.Text.Json;
 
 namespace Core1.Web
 {
@@ -97,14 +98,14 @@ namespace Core1.Web
             });
 
             services
-                .AddMvc()
+                .AddControllersWithViews()
                 .AddFluentValidation(options =>
                 {
                     options.RegisterValidatorsFromAssemblyContaining<Startup>();
                 })
                 .AddJsonOptions(options =>
                 {
-                    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                    options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
                 })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
@@ -154,11 +155,13 @@ namespace Core1.Web
 
             app.UseMiddleware(typeof(ErrorHandlingMiddleware));
 
-            app.UseMvc(routes =>
+            app.UseRouting();
+
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
+                endpoints.MapControllerRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
