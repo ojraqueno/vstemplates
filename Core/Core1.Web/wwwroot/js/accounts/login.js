@@ -1,5 +1,5 @@
 ﻿import Vue from 'vue';
-import VeeValidate from 'vee-validate';
+import * as VeeValidate from 'vee-validate';
 import axios from 'axios';
 import _ from 'lodash';
 import redirect from '../shared/redirect';

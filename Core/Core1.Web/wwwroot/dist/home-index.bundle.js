@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./wwwroot/js/shared/layout.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./wwwroot/js/home/index.js");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -142,15 +142,15 @@ eval("var g; // This works in non-strict mode\n\ng = function () {\n  return thi
 
 /***/ }),
 
-/***/ "./wwwroot/js/shared/layout.js":
-/*!*************************************!*\
-  !*** ./wwwroot/js/shared/layout.js ***!
-  \*************************************/
+/***/ "./wwwroot/js/home/index.js":
+/*!**********************************!*\
+  !*** ./wwwroot/js/home/index.js ***!
+  \**********************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ \"./node_modules/vue/dist/vue.esm.js\");\n\nvar vm = new vue__WEBPACK_IMPORTED_MODULE_0__[\"default\"]({\n  el: '#navbar',\n  data: {\n    isActive: false\n  },\n  methods: {\n    toggleActive: function () {\n      this.isActive = !this.isActive;\n    }\n  }\n});\n\n//# sourceURL=webpack:///./wwwroot/js/shared/layout.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ \"./node_modules/vue/dist/vue.esm.js\");\n\nvue__WEBPACK_IMPORTED_MODULE_0__[\"default\"].config.devtools = true;\nvar vm = new vue__WEBPACK_IMPORTED_MODULE_0__[\"default\"]({\n  el: '#home-index',\n  data: {},\n  methods: {},\n  created: function () {},\n\n  mounted() {}\n\n});\n\n//# sourceURL=webpack:///./wwwroot/js/home/index.js?");
 
 /***/ })
 

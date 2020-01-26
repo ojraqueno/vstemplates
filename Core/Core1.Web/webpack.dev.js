@@ -1,7 +1,8 @@
 ﻿let path = require('path');
-var webpack = require('webpack');
+const webpack = require('webpack');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
     mode: 'development',
@@ -11,7 +12,8 @@ module.exports = {
         'accounts-register': './wwwroot/js/accounts/register.js',
         'accounts-reset-password': './wwwroot/js/accounts/reset-password.js',
         'home-index': './wwwroot/js/home/index.js',
-        'shared-layout': './wwwroot/js/shared/layout.js'
+        'shared-layout': './wwwroot/js/shared/layout.js',
+        'styles': './wwwroot/css/shared/app.css'
     },
     module: {
         rules: [
@@ -38,8 +40,19 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: [
-                    'vue-style-loader',
-                    'css-loader'
+                    { loader: MiniCssExtractPlugin.loader },
+                    //{ loader: 'vue-style-loader' },
+                    { loader: "css-loader" },
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            ident: 'postcss',
+                            plugins: [
+                                require('tailwindcss'),
+                                require('autoprefixer')
+                            ]
+                        }
+                    }
                 ]
             },
             // the url-loader uses DataUrls.
@@ -61,9 +74,13 @@ module.exports = {
         filename: '[name].bundle.js'
     },
     plugins: [
+        new CleanWebpackPlugin(),
         new VueLoaderPlugin(),
         new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /en/),
-        //new BundleAnalyzerPlugin()
+        new MiniCssExtractPlugin({
+            filename: '[name].css',
+            chunkFilename: '[name].css'
+        })
     ],
     resolve: {
         alias: {

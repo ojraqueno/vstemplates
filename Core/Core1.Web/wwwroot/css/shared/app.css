@@ -2,7 +2,7 @@
     sticky-footer
     As seen on https://philipwalton.github.io/solved-by-flexbox/demos/sticky-footer/
 */
-.sf-site {
+/*.sf-site {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
@@ -10,7 +10,13 @@
 
 .sf-site-content {
     flex: 1;
-}
+}*/
+
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
 
 /* 
     Prevent FOUC.
