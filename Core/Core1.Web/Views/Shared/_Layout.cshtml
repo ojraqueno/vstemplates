@@ -16,23 +16,10 @@
     <meta name="description" content="" />
 
     <environment include="Development">
-        <link rel="stylesheet" href="~/lib/buefy/dist/buefy.css" />
-        <link rel="stylesheet" href="~/lib/bulma/css/bulma.css" />
-        <link rel="stylesheet" href="~/lib/@@fortawesome/fontawesome-free/css/all.css" />
-        <link rel="stylesheet" href="~/lib/animate.css/animate.css" />
-        <link rel="stylesheet" href="~/css/shared/app.css" />
+        <link rel="stylesheet" href="~/dist/styles.css" />
     </environment>
     <environment exclude="Development">
-        <link rel="stylesheet" href="https://unpkg.com/buefy/dist/buefy.min.css"
-              asp-fallback-href="~/lib/buefy/lib/buefy.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css"
-              asp-fallback-href="~/lib/bulma/css/bulma.min.css" />
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
-              integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"
-              asp-fallback-href="~/lib/@@fortawesome/fontawesome-free/css/all.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css"
-              asp-fallback-href="~/lib/animate.css/animate.min.css" />
-        <link rel="stylesheet" href="~/css/shared/app.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/dist/styles.css" asp-append-version="true" />
     </environment>
     @RenderSection("styles", required: false)
 </head>
@@ -54,16 +41,6 @@
         <partial name="_Footer" />
     }
 
-    <environment exclude="Development">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.6/vue.min.js"
-                asp-fallback-src="~/lib/vue/dist/vue.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"
-                asp-fallback-src="~/lib/axios/dist/axios.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"
-                asp-fallback-src="~/lib/lodash/lodash.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/vee-validate/2.1.7/vee-validate.min.js"
-                asp-fallback-src="~/lib/vee-validate/dist/vee-validate.min.js"></script>
-    </environment>
     @if (User.Identity.IsAuthenticated)
     {
         <script type="application/json" id="CurrentUser">
