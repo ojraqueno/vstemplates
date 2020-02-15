@@ -1,102 +1,79 @@
 ﻿using Core1.Infrastructure.Data;
 using Core1.Infrastructure.Identity;
 using Core1.Model;
-using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Core1.Web.Infrastructure
 {
     public interface IUserContext
     {
         AppIdentityUser CurrentUser { get; }
-        IList<AppIdentityRole> CurrentUserRoles { get; }
-        string CurrentUserUsername { get; }
+
+        void Clear();
 
         bool HasPermission(Permission permission);
+
+        Task Initialize(string username);
     }
 
     public class UserContext : IUserContext
     {
         private readonly AppDbContext _db;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-
-        public UserContext(AppDbContext db, IHttpContextAccessor httpContextAccessor)
-        {
-            _db = db;
-            _httpContextAccessor = httpContextAccessor;
-        }
-
-        private AppIdentityUser _currentUser;
-
-        public AppIdentityUser CurrentUser
-        {
-            get
-            {
-                if (_currentUser == null)
-                {
-                    var currentUserId = _httpContextAccessor.HttpContext.User.FindAll(ClaimTypes.NameIdentifier).LastOrDefault()?.Value;
-
-                    if (!String.IsNullOrWhiteSpace(currentUserId))
-                    {
-                        _currentUser = _db
-                            .Users
-                            .Single(u => u.Id == currentUserId);
-                    }
-                }
-
-                return _currentUser;
-            }
-        }
-
-        private IList<AppIdentityRole> _currentUserRoles;
-
-        public IList<AppIdentityRole> CurrentUserRoles
-        {
-            get
-            {
-                if (_currentUserRoles == null)
-                {
-                    var userRoles = _db
-                        .UserRoles
-                        .Where(ur => ur.UserId == CurrentUser.Id)
-                        .ToList();
-
-                    var userRoleIds = userRoles
-                        .Select(ur => ur.RoleId)
-                        .ToList();
-
-                    _currentUserRoles = _db
-                        .Roles
-                        .Where(r => userRoleIds.Contains(r.Id))
-                        .ToList();
-                }
-
-                return _currentUserRoles;
-            }
-        }
-
         private IList<Permission> _currentUserPermissions;
 
-        public IList<Permission> CurrentUserPermissions
+        public UserContext(AppDbContext db)
         {
-            get
-            {
-                if (_currentUserPermissions == null)
-                {
-                    _currentUserPermissions = CurrentUserRoles
-                        .SelectMany(r => r.Permissions)
-                        .ToList();
-                }
-
-                return _currentUserPermissions;
-            }
+            _db = db;
         }
 
-        public string CurrentUserUsername => _httpContextAccessor.HttpContext.User.Identity.Name;
+        public AppIdentityUser CurrentUser { get; private set; }
 
-        public bool HasPermission(Permission permission) => CurrentUserPermissions.Contains(permission);
+        public void Clear()
+        {
+            CurrentUser = null;
+            _currentUserPermissions = new List<Permission>();
+        }
+
+        public bool HasPermission(Permission permission) => _currentUserPermissions.Contains(permission);
+
+        public async Task Initialize(string username)
+        {
+            if (String.IsNullOrWhiteSpace(username)) throw new ArgumentNullException(nameof(username));
+
+            CurrentUser = await _db
+                .Users
+                .SingleAsync(u => u.UserName == username);
+
+            var currentUserRoles = GetUserRoles(CurrentUser.Id);
+
+            _currentUserPermissions = currentUserRoles
+                .SelectMany(r => r.Permissions)
+                .ToList();
+        }
+
+        private IList<AppIdentityRole> GetUserRoles(string userId)
+        {
+            if (String.IsNullOrWhiteSpace(userId)) throw new ArgumentNullException(nameof(userId));
+
+            var userRoles = _db
+                .UserRoles
+                .Where(ur => ur.UserId == userId)
+                .ToList();
+
+            var userRoleIds = userRoles
+                .Select(ur => ur.RoleId)
+                .ToList();
+
+            var currentUserRoles = _db
+                .Roles
+                .Where(r => userRoleIds.Contains(r.Id))
+                .ToList();
+
+            return currentUserRoles;
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Core1.Infrastructure.Data;
 using Core1.Model;
+using Core1.Web.Infrastructure;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -63,11 +64,13 @@ namespace Core1.Web.Features.Accounts
         {
             private readonly AppDbContext _db;
             private readonly SignInManager<AppIdentityUser> _signInManager;
+            private readonly IUserContext _userContext;
 
-            public CommandHandler(AppDbContext db, SignInManager<AppIdentityUser> signInManager)
+            public CommandHandler(AppDbContext db, SignInManager<AppIdentityUser> signInManager, IUserContext userContext)
             {
                 _db = db;
                 _signInManager = signInManager;
+                _userContext = userContext;
             }
 
             public async Task<CommandResult> Handle(Command command, CancellationToken cancellationToken)
@@ -77,6 +80,8 @@ namespace Core1.Web.Features.Accounts
 
                 var result = await _signInManager.PasswordSignInAsync(command.Email, command.Password, command.RememberMe, lockoutOnFailure: true);
                 if (!result.Succeeded) throw new Exception($"Login exception for user {command.Email}");
+
+                await _userContext.Initialize(command.Email);
 
                 return new CommandResult
                 {
