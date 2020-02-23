@@ -109,7 +109,7 @@ namespace Core1.Web
                 })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddSingleton<IEmailSender, EmailSender>();
+            services.AddSingleton<IEmailSender, SendGridEmailSender>();
             services.AddSingleton<IWebStorage, AzureStorage>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
 

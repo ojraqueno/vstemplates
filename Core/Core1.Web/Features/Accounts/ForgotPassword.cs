@@ -6,6 +6,8 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using System.Net.Mail;
 using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
@@ -44,14 +46,16 @@ namespace Core1.Web.Features.Accounts
 
         public class CommandHandler : IRequestHandler<Command, CommandResult>
         {
+            private readonly IConfiguration _configuration;
             private readonly AppDbContext _db;
             private readonly IEmailSender _emailSender;
             private readonly IHttpContextAccessor _httpContextAccessor;
             private readonly IUrlHelper _urlHelper;
             private readonly UserManager<AppIdentityUser> _userManager;
 
-            public CommandHandler(AppDbContext db, IEmailSender emailSender, IHttpContextAccessor httpContextAccessor, IUrlHelper urlHelper, UserManager<AppIdentityUser> userManager)
+            public CommandHandler(IConfiguration configuration, AppDbContext db, IEmailSender emailSender, IHttpContextAccessor httpContextAccessor, IUrlHelper urlHelper, UserManager<AppIdentityUser> userManager)
             {
+                _configuration = configuration;
                 _db = db;
                 _emailSender = emailSender;
                 _httpContextAccessor = httpContextAccessor;
@@ -82,9 +86,10 @@ namespace Core1.Web.Features.Accounts
                 Task.Run(async () =>
                 {
                     await _emailSender.SendEmailAsync(
-                       command.Email,
-                       "Reset Password",
-                       $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(resetPasswordUrl)}'>clicking here</a>. If you did not initiate this action, please ignore this email.");
+                        new MailAddress(_configuration["Email:ResetPasswordFromEmail"], _configuration["Email:ResetPasswordFromName"]),
+                        new MailAddress(command.Email),
+                        $"Reset Password",
+                        $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(resetPasswordUrl)}'>clicking here</a>. If you did not initiate this action, please ignore this email.");
                 });
 
                 return new CommandResult { Succeeded = true };
