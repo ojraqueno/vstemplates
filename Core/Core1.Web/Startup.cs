@@ -2,6 +2,7 @@
 using Core1.Infrastructure.Data;
 using Core1.Infrastructure.Email;
 using Core1.Infrastructure.Identity;
+using Core1.Infrastructure.Logging;
 using Core1.Infrastructure.Storage;
 using Core1.Model;
 using Core1.RazorEmails.Infrastructure;
@@ -20,7 +21,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json.Serialization;
 using System.IO;
 using System.Text;
 using System.Text.Json;
@@ -111,6 +111,7 @@ namespace Core1.Web
 
             services.AddSingleton<IEmailSender, SendGridEmailSender>();
             services.AddSingleton<IWebStorage, AzureStorage>();
+            services.AddSingleton<SimpleDbLogger, SimpleDbLogger>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
 
             services.AddAutoMapper(typeof(Startup));
